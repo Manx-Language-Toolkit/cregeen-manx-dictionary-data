@@ -206,10 +206,7 @@ namespace Cregeen
             
             using (StreamWriter sw = new StreamWriter(new FileStream(outPath, FileMode.Create), Encoding.UTF8))
             {
-                foreach (var headword in headwords)
-                {
-                    sw.WriteLine(JsonConvert.SerializeObject(OutDef.FromDef(headword), Json.JsonSettings));
-                }
+                sw.WriteLine(JsonConvert.SerializeObject(headwords.Select(headword => OutDef.FromDef(headword)), Json.JsonSettings));
             }
         }
 
