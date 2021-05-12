@@ -11,11 +11,12 @@ namespace Cregeen
         public Headword(Definition def)
         {
             this.Definition = def;
+            this.Definition.Depth = -1;
         }
 
         public Definition Definition { get; }
 
-        public IEnumerable<Definition> All => Definition.All;
+        public IEnumerable<Definition> All => Definition.AllChildren;
 
         internal static Headword FromHtml(HtmlNode arg1, int arg2)
         {
@@ -32,20 +33,29 @@ namespace Cregeen
 
             var toReturn = new Headword(headword);
 
-            toReturn.AddChildren(splitOnLineBreak);
+            var children = splitOnLineBreak.Skip(1).ToList();
+
+            var depths = children.Select(x => x.Depth).Distinct().OrderBy(x => x).ToList();
+
+            var wordToDepth = splitOnLineBreak.ToDictionary(x => x, x => depths.IndexOf(x.Depth));
+            
+            foreach (var (node, pos) in splitOnLineBreak.Select((x, i) => (x,i)).Skip(1))
+            {
+                // find the depth
+                var depth = wordToDepth[node];
+                for (int j = pos - 1; j >= 0; j--)
+                {
+                    var parent = splitOnLineBreak[j];
+                    var parentDepth = wordToDepth[parent];
+                    if (parentDepth < depth)
+                    {
+                        parent.AddChild(node);
+                        break;
+                    }
+                }
+            }
 
             return toReturn;
-        }
-
-        private void AddChildren(List<Definition> splitOnLineBreak)
-        {
-
-            Definition.Children.AddRange(splitOnLineBreak.Skip(1));
-
-            foreach (var child in Definition.Children)
-            {
-                child.Headword = this;
-            }
         }
     }
 }

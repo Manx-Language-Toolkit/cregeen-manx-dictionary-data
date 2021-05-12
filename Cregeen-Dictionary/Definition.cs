@@ -29,9 +29,6 @@ namespace Cregeen
 
         public List<Definition> Children { get; } = new List<Definition>();
 
-        // Note: Circular definition
-        internal Headword Headword { get; set; }
-
 
         static HashSet<string> HeadWordsWithNoDefinitions = new HashSet<string>
         {
@@ -88,12 +85,18 @@ namespace Cregeen
             return new Definition(word, definition);
         }
 
-        public IEnumerable<Definition> All
+        internal void AddChild(Definition node)
+        {
+            this.Children.Add(node);
+            node.Parent = this;
+        }
+
+        public IEnumerable<Definition> AllChildren
         {
             get
             {
                 yield return this;
-                foreach (var child in Children.SelectMany(x => x.All))
+                foreach (var child in Children.SelectMany(x => x.AllChildren))
                 {
                     yield return child;
                 }
@@ -108,6 +111,16 @@ namespace Cregeen
                 return getPossibleWords().Select(x => x.Replace('‑', '-'));
             }
         }
+
+        private int? depth = null;
+        /// <summary>The nesting depth of an element is defined by the number of spaces before the word in the HTML</summary>
+        public int Depth
+        {
+            get => depth ?? Word.Length - Word.TrimStart().Length;
+            set => depth = value;
+        }
+
+        public Definition Parent { get; private set; }
 
         /// <summary>Reads the word and the definition to obtain the possible words which will link to this definition</summary>
         private IEnumerable<string> getPossibleWords()
@@ -158,7 +171,7 @@ namespace Cregeen
             var doc = new HtmlDocument();
             doc.LoadHtml(word);
             var wordAsString = doc.DocumentNode.InnerText;
-            return HttpUtility.HtmlDecode(wordAsString);
+            return HttpUtility.HtmlDecode(wordAsString).Trim('\r', '\n');
         }
     }
 
