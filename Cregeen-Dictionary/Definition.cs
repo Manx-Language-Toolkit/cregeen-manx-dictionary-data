@@ -122,15 +122,24 @@ namespace Cregeen
 
         public Definition Parent { get; private set; }
 
+        /// <summary>placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &c.</summary>
+        private static char VERB_HAS_SUFFIXES = '*';
+
         /// <summary>Reads the word and the definition to obtain the possible words which will link to this definition</summary>
         private IEnumerable<string> getPossibleWords()
         {
-            // TODO: Asterisk: is placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &c.
-            List<string> words = new List<string>(Regex.Split(Word, "\\s+or\\s+").Select(x => x.Trim().Trim('*')));
+           List<string> words = Regex.Split(Word, "\\s+or\\s+").Select(x => x.Trim().Trim(VERB_HAS_SUFFIXES)).ToList();
             foreach (var w in words)
             {
                 yield return w;
             }
+
+            // Only apply suffixes to the words matked with an asterisk
+            var wordsWithSuffixChanges = Word.Contains(VERB_HAS_SUFFIXES) ? 
+                Regex.Split(Word, "\\s+or\\s+")
+                .Where(x => x.Contains(VERB_HAS_SUFFIXES))
+                .Select(x => x.Trim().Trim(VERB_HAS_SUFFIXES)).ToList() 
+                : words;
 
             // TODO: How to handle "[change -agh to -ee], or  yn."
             var suffixes = Regex.Matches(Entry, "\\s(-|‑)\\w+").Select(x => x.Value.Trim(new char[] { '‑', '-', '\n', '\r', ' ' })).ToList();
@@ -144,7 +153,7 @@ namespace Cregeen
                 {
                     var suffixToFind = changeInSuffix.Groups[1].Value.Trim();
 
-                    foreach (var word in words)
+                    foreach (var word in wordsWithSuffixChanges)
                     {
                         if (word.EndsWith(suffixToFind))
                         {
@@ -157,11 +166,11 @@ namespace Cregeen
                 }
             }
 
-            foreach (var head in words)
+            foreach (var wordAsPrefix in wordsWithSuffixChanges)
             {
                 foreach (string suffix in suffixes)
                 {
-                    yield return head + suffix;
+                    yield return wordAsPrefix + suffix;
                 }
             }
         }
