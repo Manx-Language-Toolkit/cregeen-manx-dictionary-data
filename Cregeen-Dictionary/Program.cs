@@ -38,7 +38,12 @@ namespace Cregeen
 
             string resourceName = "Cregeen.aa-orderit.01052020-filtered.htm";
 
-            HtmlDocument doc = LoadWordEncodedFile(resourceName);
+            var docText = LoadWordEncodedFile(resourceName);
+
+            docText = docText.Replace("<i><br>\r\n", "<br>\r\n<i>");
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(docText);
 
 
             var headwords = doc.DocumentNode.Descendants("p")
@@ -223,17 +228,13 @@ namespace Cregeen
             }
         }
 
-        private static HtmlDocument LoadWordEncodedFile(string resourceName)
+        private static string LoadWordEncodedFile(string resourceName)
         {
-            var doc = new HtmlDocument();
-
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             Encoding wind1252 = Encoding.GetEncoding(1252);
             // 1252 encoded :/
-            string content = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Resources", resourceName), wind1252);
-            doc.LoadHtml(content);
-            return doc;
+            return File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Resources", resourceName), wind1252);
         }
     }
 
@@ -241,6 +242,7 @@ namespace Cregeen
     {
         public string[] Words { get; set; }
         public string EntryHtml { get; set; }
+        public string HeadingHtml { get; set; }
         public OutDef[] Children { get; set; }
 
         internal static OutDef FromDef(Headword def)
@@ -254,6 +256,7 @@ namespace Cregeen
             {
                 Words = def.PossibleWords.ToArray(),
                 EntryHtml = def.Extra,
+                HeadingHtml = def.Heading,
                 Children = def.Children.Select(FromDef).ToArray()
             };
         }

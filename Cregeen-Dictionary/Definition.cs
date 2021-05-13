@@ -122,6 +122,9 @@ namespace Cregeen
 
         public Definition Parent { get; private set; }
 
+        /// <summary>The HTML of the headword(s) for the entry</summary>
+        public string Heading => this.originalWord;
+
         /// <summary>placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &c.</summary>
         private static char VERB_HAS_SUFFIXES = '*';
 
