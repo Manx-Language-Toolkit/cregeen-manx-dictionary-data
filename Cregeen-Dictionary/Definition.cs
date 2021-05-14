@@ -115,7 +115,8 @@ namespace Cregeen
         {
             get
             {
-                return getPossibleWords().Select(x => x.Replace('‑', '-'));
+                // removing "sic" can cause duplicates
+                return getPossibleWords().Select(x => x.Replace('‑', '-').TrimAfter(" [sic:", " (sic:")).Distinct();
             }
         }
 

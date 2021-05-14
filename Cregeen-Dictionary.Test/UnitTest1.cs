@@ -42,6 +42,18 @@ namespace Cregeen_Dictionary.Test
             Assert.That(json.EntryHtml.EndsWith("</b>"));
         }
 
+        [Test]
+        public void SicIsStripped()
+        {
+            // two instances of `Times New Roman",serif`
+            var html = GetResource("Cregeen_Dictionary.Test.TestData.annoon.html");
+
+            List<Definition> def = GetDefinitions(html);
+
+            // TODO: This should be an exact match
+            Assert.That(def.First().PossibleWords.First(), Is.EqualTo("annoon"));
+        }
+
         private static List<Definition> GetDefinitions(string html)
         {
             return Headword.ConvertToDefinitions(html);
