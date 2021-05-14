@@ -50,6 +50,13 @@ namespace Cregeen
         {
             var split = arg1.Split(",").ToList();
 
+
+            while (split[0].EndsWith("Times New Roman\"") && split.Count > 1)
+            {
+                split[0] = split[0] + split[1];
+                split.RemoveAt(1);
+            }
+
             // ". See" is a common element which does not contain a comma
             if (split[0].Contains(". See"))
             {

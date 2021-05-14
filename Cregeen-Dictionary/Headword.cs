@@ -26,8 +26,7 @@ namespace Cregeen
                 return null;
             }
 
-            // Note: We change <br> to <br/> for an explicit newline
-            var splitOnLineBreak = arg1.InnerHtml.Split("<br>").Select(x => Definition.FromHtml(x)).ToList();
+            List<Definition> splitOnLineBreak = ConvertToDefinitions(arg1.InnerHtml);
 
             var headword = splitOnLineBreak[0];
 
@@ -38,8 +37,8 @@ namespace Cregeen
             var depths = children.Select(x => x.Depth).Distinct().OrderBy(x => x).ToList();
 
             var wordToDepth = splitOnLineBreak.ToDictionary(x => x, x => depths.IndexOf(x.Depth));
-            
-            foreach (var (node, pos) in splitOnLineBreak.Select((x, i) => (x,i)).Skip(1))
+
+            foreach (var (node, pos) in splitOnLineBreak.Select((x, i) => (x, i)).Skip(1))
             {
                 // find the depth
                 var depth = wordToDepth[node];
@@ -56,6 +55,12 @@ namespace Cregeen
             }
 
             return toReturn;
+        }
+
+        internal static List<Definition> ConvertToDefinitions(string html)
+        {
+            // Note: We change <br> to <br/> for an explicit newline
+            return html.Split("<br>").Select(x => Definition.FromHtml(x)).ToList();
         }
     }
 }
