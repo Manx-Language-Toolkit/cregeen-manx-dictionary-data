@@ -48,7 +48,7 @@ namespace Cregeen
 
             var headwords = doc.DocumentNode.Descendants("p")
                 .Skip(1708)  // skip the preamble
-                .Take(3539)  // and suffix
+                .Take(3451)  // and suffix
                 .Select(Headword.FromHtml)
                 .Where(x => x != null)
                 .ToList();
@@ -90,7 +90,7 @@ namespace Cregeen
                 "screeueyrys [l. screeudeyrys ?]",
                 "yn çheeloghe (sic: stress)",
                 "dy oardrail (sic: stress)",
-                "",
+                "bare lhieusyn <or lhieuish>",
                 "",
                 "",
                 "",
@@ -109,6 +109,7 @@ namespace Cregeen
                 "foddey er dy henney",
                 "agh son shoh as ooilley",
                 "eh ta dy my choyrt",
+                "er-çhee dy yannoo",
                 "lus ny binjey lheeanagh",
                 "lus ny binjey mooar",
                 "shee dy row marin",
@@ -126,6 +127,7 @@ namespace Cregeen
                 "lus ny moyl Moirrey",
                 "lus feie y tooill",
                 "lus millish ny lheeanagh",
+                "lus villish ny lheeanagh",
                 "lus ny freenaghyn mooarey",
                 "lus ny moal moirrey",
                 "lus ny moyl moirrey",
