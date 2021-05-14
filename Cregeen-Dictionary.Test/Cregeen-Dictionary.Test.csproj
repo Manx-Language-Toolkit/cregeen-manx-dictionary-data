@@ -10,11 +10,13 @@
   <ItemGroup>
     <None Remove="TestData\aght.html" />
     <None Remove="TestData\annoon.html" />
+    <None Remove="TestData\bing.html" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="TestData\aght.html" />
     <EmbeddedResource Include="TestData\annoon.html" />
+    <EmbeddedResource Include="TestData\bing.html" />
   </ItemGroup>
 
   <ItemGroup>

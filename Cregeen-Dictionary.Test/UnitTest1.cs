@@ -30,6 +30,18 @@ namespace Cregeen_Dictionary.Test
             Assert.That(def.First().PossibleWords.First(), Does.StartWith("annoon"));
         }
 
+        [Test]
+        public void TestClosingTags()
+        {
+            var html = GetResource("Cregeen_Dictionary.Test.TestData.bing.html");
+
+            var headword = Headword.FromHtmlUnsafe(html);
+
+            var json = OutDef.FromDef(headword);
+
+            Assert.That(json.EntryHtml.EndsWith("</b>"));
+        }
+
         private static List<Definition> GetDefinitions(string html)
         {
             return Headword.ConvertToDefinitions(html);

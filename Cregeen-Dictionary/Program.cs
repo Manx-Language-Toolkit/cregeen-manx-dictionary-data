@@ -255,10 +255,17 @@ namespace Cregeen
             return new OutDef
             {
                 Words = def.PossibleWords.ToArray(),
-                EntryHtml = def.Extra,
-                HeadingHtml = def.Heading,
+                EntryHtml = FixUnclosedTags(def.Extra),
+                HeadingHtml = FixUnclosedTags(def.Heading),
                 Children = def.Children.Select(FromDef).ToArray()
             };
+        }
+
+        private static string FixUnclosedTags(string heading)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(heading);
+            return document.DocumentNode.OuterHtml;
         }
     }
 }

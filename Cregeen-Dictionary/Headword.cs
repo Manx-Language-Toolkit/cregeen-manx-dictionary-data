@@ -26,7 +26,12 @@ namespace Cregeen
                 return null;
             }
 
-            List<Definition> splitOnLineBreak = ConvertToDefinitions(arg1.InnerHtml);
+            return FromHtmlUnsafe(arg1.InnerHtml);
+        }
+
+        internal static Headword FromHtmlUnsafe(string html)
+        {
+            List<Definition> splitOnLineBreak = ConvertToDefinitions(html);
 
             var headword = splitOnLineBreak[0];
 
