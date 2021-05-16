@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Cregeen
 {
@@ -55,6 +56,7 @@ namespace Cregeen
 
             VerifyHeadwords(headwords);
 
+            // All words - not just headwords
             var allWordDefinitions = headwords.SelectMany(x => x.All);
 
             HashSet<string> ok = new HashSet<string>()
@@ -178,13 +180,22 @@ namespace Cregeen
 
             List<string> maybeInvalid = new List<string>();
             List<string> withParen = new List<string>();
+            List<string> failedRegex = new List<string>();
 
             // Obtain the "bad" input to display in-console for manual fixes of the .htm
             foreach (Definition def in allWordDefinitions)
             {
                 bool ContainsMoreThan2Words(Definition def) => def.Word.Count(x => x == ' ') > 2;
                 bool IsAllowListed(Definition def) => ok.Contains(def.Word.Trim());
-
+                bool MatchesRegex(Definition def)
+                {
+                    // " " - "yn nah"
+                    // "-" is valid,
+                    // "ç/Ç" is a valid char
+                    // "'" is valid: "cha n'aaitnagh", but not "’"
+                    return def.PossibleWords.All(x => Regex.IsMatch(x, "^[a-zA-Z\\-\\sçÇ']+$")); 
+                }
+                
                 if (ContainsMoreThan2Words(def) && !def.Word.Contains(" or ") && !IsAllowListed(def))
                 {
                     maybeInvalid.Add(def.Word);
@@ -196,13 +207,19 @@ namespace Cregeen
                 {
                     withParen.Add(main);
                 }
+
+                if (!MatchesRegex(def))
+                {
+                    failedRegex.Add(main);
+                }
             }
 
             // Display the issues
-            Console.WriteLine();
-            foreach (var v in withParen.Concat(maybeInvalid))
+            var issues = withParen.Concat(maybeInvalid).Concat(failedRegex).ToList();
+            Console.WriteLine($"Found {issues.Count} issues");
+            foreach (var issue in issues)
             {
-                Console.WriteLine(v.Trim());
+                Console.WriteLine(issue.Trim());
             }
 
             // Write the JSON to a file
