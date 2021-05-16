@@ -193,7 +193,8 @@ namespace Cregeen
                     // "-" is valid,
                     // "ç/Ç" is a valid char
                     // "'" is valid: "cha n'aaitnagh", but not "’"
-                    return def.PossibleWords.All(x => Regex.IsMatch(x, "^[a-zA-Z\\-\\sçÇ']+$")); 
+                    // "ï", invalid, but to be handled in #6
+                    return def.PossibleWords.All(x => Regex.IsMatch(x, "^[a-zA-Z\\-\\sçÇï']+$")); 
                 }
                 
                 if (ContainsMoreThan2Words(def) && !def.Word.Contains(" or ") && !IsAllowListed(def))
