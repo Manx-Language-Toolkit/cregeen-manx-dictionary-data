@@ -12,6 +12,7 @@
     <None Remove="TestData\aght.html" />
     <None Remove="TestData\annoon.html" />
     <None Remove="TestData\bing.html" />
+    <None Remove="TestData\gheul.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
     <EmbeddedResource Include="TestData\aght.html" />
     <EmbeddedResource Include="TestData\annoon.html" />
     <EmbeddedResource Include="TestData\bing.html" />
+    <EmbeddedResource Include="TestData\gheul.html" />
   </ItemGroup>
 
   <ItemGroup>
