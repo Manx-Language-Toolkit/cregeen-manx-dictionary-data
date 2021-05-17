@@ -194,6 +194,14 @@ namespace Cregeen
             var wordAsString = doc.DocumentNode.InnerText;
             return HttpUtility.HtmlDecode(wordAsString).Trim('\r', '\n').Replace("[*]", "*")
                 .RemoveBetween("<", ">") // Max uses <> to mark deletions. Since we decoded the InnerText, this is the real character and not the HTML
+                .Replace("[cha]", "cha")
+                .Replace("[er]", "er")
+                .Replace("[ny]", "ny")
+                .Replace("[da]", "da")
+                .Replace("[lesh]", "lesh")
+                .Replace("[yn]", "yn")
+                .Replace("[e]", "e")
+                .Replace("[ad]", "ad")
                 ;
         }
     }
