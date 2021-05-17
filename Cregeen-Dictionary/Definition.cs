@@ -1,12 +1,14 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Cregeen
 {
+    [DebuggerDisplay("{originalWord}")]
     public class Definition
     {
         /// <summary>
