@@ -1,8 +1,8 @@
 using Cregeen;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using static Cregeen_Dictionary.Test.TestUtil.ResourceFetcher;
 
 namespace Cregeen_Dictionary.Test
 {
@@ -80,20 +80,6 @@ namespace Cregeen_Dictionary.Test
         private static List<Definition> GetDefinitions(string html)
         {
             return Headword.ConvertToDefinitions(html);
-        }
-
-        private string GetResource(string file)
-        {
-            using var stream = typeof(Tests).Assembly.GetManifestResourceStream(file);
-            
-            if (stream == null)
-            {
-                var names = typeof(Tests).Assembly.GetManifestResourceNames();
-            }
-
-            using TextReader tr = new StreamReader(stream);
-            return tr.ReadToEnd();
-            
         }
     }
 }
