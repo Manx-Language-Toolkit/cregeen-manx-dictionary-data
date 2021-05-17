@@ -64,6 +64,19 @@ namespace Cregeen_Dictionary.Test
             Assert.That(def.SelectMany(x => x.AllChildren.SelectMany(x => x.PossibleWords)), Does.Contain("cha n'agglagh"));
         }
 
+        [Test]
+        public void TriangularBracesAreStripped()
+        {
+            // "I indicate elements for suppression between < >, "
+            var html = GetResource("Cregeen_Dictionary.Test.TestData.gheul.html");
+            // <b>gheul</b>* &lt;or <b>gheuley</b>&gt; - so this should just be 'gheul' without 'gheuley'"
+
+            List<Definition> def = GetDefinitions(html);
+
+            Assert.That(def.SelectMany(x => x.AllChildren.SelectMany(x => x.PossibleWords)), Does.Contain("gheulagh")); //gheul + -agh
+            Assert.That(def.SelectMany(x => x.AllChildren.SelectMany(x => x.PossibleWords)), Does.Not.Contain("gheuley"));
+        }
+
         private static List<Definition> GetDefinitions(string html)
         {
             return Headword.ConvertToDefinitions(html);

@@ -1,4 +1,6 @@
-﻿namespace Cregeen
+﻿using System;
+
+namespace Cregeen
 {
     public static class Extensions
     {
@@ -14,6 +16,29 @@
                 return target.Substring(0, index);
             }
 
+            return target;
+        }
+
+        public static string RemoveBetween(this string target, string start, string end)
+        {
+            // PERF: Inefficient - 
+            var index = target.IndexOf(start);
+            while (index != -1)
+            {
+                var endIndex = target.IndexOf(end, index) + end.Length;
+                if (endIndex == 0)
+                {
+                    break;
+                }
+                if (endIndex <= index)
+                {
+                    throw new ArgumentException();
+                }
+                target = target.Substring(0, index) + target.Substring(endIndex);
+
+
+                index = target.IndexOf(start);
+            }
             return target;
         }
     }
