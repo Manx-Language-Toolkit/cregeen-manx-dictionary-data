@@ -98,6 +98,7 @@ namespace Cregeen
             node.Parent = this;
         }
 
+        /// <summary>All children including this</summary>
         public IEnumerable<Definition> AllChildren
         {
             get
@@ -191,7 +192,7 @@ namespace Cregeen
             var doc = new HtmlDocument();
             doc.LoadHtml(word);
             var wordAsString = doc.DocumentNode.InnerText;
-            return HttpUtility.HtmlDecode(wordAsString).Trim('\r', '\n');
+            return HttpUtility.HtmlDecode(wordAsString).Trim('\r', '\n').Replace("[*]", "*");
         }
     }
 

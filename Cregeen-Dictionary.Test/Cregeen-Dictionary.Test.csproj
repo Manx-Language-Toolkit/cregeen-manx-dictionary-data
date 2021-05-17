@@ -8,12 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestData\aggle.html" />
     <None Remove="TestData\aght.html" />
     <None Remove="TestData\annoon.html" />
     <None Remove="TestData\bing.html" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="TestData\aggle.html" />
     <EmbeddedResource Include="TestData\aght.html" />
     <EmbeddedResource Include="TestData\annoon.html" />
     <EmbeddedResource Include="TestData\bing.html" />
