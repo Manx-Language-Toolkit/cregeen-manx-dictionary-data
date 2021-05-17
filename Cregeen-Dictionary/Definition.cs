@@ -204,6 +204,8 @@ namespace Cregeen
                 .Replace("[yn]", "yn")
                 .Replace("[e]", "e")
                 .Replace("[ad]", "ad")
+                .Replace("[or s'tiark]", "or s'tiark")
+                .Replace("[or cruinnaght]", "or cruinnaght")
                 ;
         }
     }
