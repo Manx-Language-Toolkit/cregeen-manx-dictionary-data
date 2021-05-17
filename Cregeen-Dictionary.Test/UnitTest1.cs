@@ -50,8 +50,18 @@ namespace Cregeen_Dictionary.Test
 
             List<Definition> def = GetDefinitions(html);
 
-            // TODO: This should be an exact match
             Assert.That(def.First().PossibleWords.First(), Is.EqualTo("annoon"));
+        }
+
+        [Test]
+        public void BracesAreStripped()
+        {
+            // [*] goes to *
+            var html = GetResource("Cregeen_Dictionary.Test.TestData.aggle.html");
+
+            List<Definition> def = GetDefinitions(html);
+
+            Assert.That(def.SelectMany(x => x.AllChildren.SelectMany(x => x.PossibleWords)), Does.Contain("cha n'agglagh"));
         }
 
         private static List<Definition> GetDefinitions(string html)
