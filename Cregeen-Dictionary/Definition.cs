@@ -136,6 +136,122 @@ namespace Cregeen
         /// <summary>The HTML of the headword(s) for the entry</summary>
         public string Heading => this.originalWord;
 
+        private Dictionary<string, Abbreviation> abbpreviationsAtPrefix = new Dictionary<string, Abbreviation>()
+        {
+            ["a. d."] = Abbreviation.AdjectiveDerivative,
+            ["a. pl."] = Abbreviation.AdjectivePlural,
+            ["a."] = Abbreviation.Adjective,
+            ["adv. p."] = Abbreviation.AdverbAndPronoun,
+            ["adv."] = Abbreviation.Adverb,
+            ["comp."] = Abbreviation.ComparativeDegree,
+            ["comj."] = Abbreviation.Conjunction,
+            ["c. p."] = Abbreviation.ConjunctionAndPronoun,
+            ["dim."] = Abbreviation.Diminutive,
+            ["em."] = Abbreviation.Emphatically,
+            ["f."] = Abbreviation.FeminineGender,
+            ["Gal."] = Abbreviation.GalicOrGaelic,
+            ["Heb."] = Abbreviation.HebrewAndBookOfHebrews,
+            ["id."] = Abbreviation.TheSameAsAbove,
+            ["idem."] = Abbreviation.TheSameAsAbove,
+            ["in."] = Abbreviation.Interjection,
+            ["lit."] = Abbreviation.Literally,
+            ["p. p."] = Abbreviation.PrepositionAndPronoun,
+            ["p."] = Abbreviation.Pronominal,
+            ["pl."] = Abbreviation.HasPlural,
+            ["pre."] = Abbreviation.Preposition,
+            ["pro."] = Abbreviation.Pronoun,
+            ["Prov."] = Abbreviation.ManksProverb,
+            ["pt."] = Abbreviation.Participle,
+            ["sing."] = Abbreviation.Singular,
+            ["s. m. f."] = Abbreviation.DoMasculineAndFeminine, // TODO: Combine
+            ["s. m."] = Abbreviation.SubstantiveMasculine,
+            ["s. pl."] = Abbreviation.SubstantivePlural,
+            ["s. f."] = Abbreviation.SubstantiveFeminine,
+            ["s."] = Abbreviation.Substantive,
+            ["sup."] = Abbreviation.SuperlativeDegree, 
+            ["syn."] = Abbreviation.Synonymous,
+            ["v. i."] = Abbreviation.VerbImperative,
+            ["v."] = Abbreviation.Verb,
+        };
+
+        public List<Abbreviation> Abbreviations
+        {
+            get
+            {
+                List<Abbreviation> ret = new List<Abbreviation>();
+                foreach (var (k, v) in abbpreviationsAtPrefix)
+                {
+                    if (Extra.Contains($" {k}") || Extra.StartsWith(k) || Extra.Contains($">{k}"))
+                    {
+                        ret.Add(v);
+                    }
+                }
+
+                if (ret.Contains(Abbreviation.Substantive) && 
+                    (ret.Contains(Abbreviation.SubstantiveFeminine) || 
+                    ret.Contains(Abbreviation.SubstantiveMasculine) || 
+                    ret.Contains(Abbreviation.SubstantivePlural)))
+                {
+                    ret.Remove(Abbreviation.Substantive);
+                }
+
+                if (ret.Contains(Abbreviation.Adjective) &&
+                    (ret.Contains(Abbreviation.AdjectiveDerivative) ||
+                    ret.Contains(Abbreviation.AdjectivePlural)))
+                {
+                    ret.Remove(Abbreviation.Adjective);
+                }
+
+                if (ret.Contains(Abbreviation.Adverb) && ret.Contains(Abbreviation.AdverbAndPronoun))
+                {
+                    ret.Remove(Abbreviation.Adverb);
+                }
+
+                if (ret.Contains(Abbreviation.Article) && ret.Contains(Abbreviation.ArticlePlural))
+                {
+                    ret.Remove(Abbreviation.Article);
+                }
+
+                if (ret.Contains(Abbreviation.Verb) && ret.Contains(Abbreviation.VerbImperative))
+                {
+                    ret.Remove(Abbreviation.Verb);
+                }
+
+                return ret;
+            }
+        }
+
+        public string EntryText
+        {
+            get
+            {
+                var ret = DecodeString(Entry)
+                    .TrimAfter("pl. ")
+                    .Replace("\r\n", " ")
+                    .Replace("\n", " ") // Windows and Linux differ
+                    .Replace(" ‑agh;", "")
+                    .Replace(" ‑ee;", "")
+                    .Replace(" ‑in;", "")
+                    .Replace(" ‑ins;", "")
+                    .Replace(" ‑ym;", "")
+                    .Replace(" ‑yms;", "")
+                    .Replace(" ‑ys, 94.", "")
+                    ;
+
+                // strip prefixed abreviations
+                foreach (var (k,v) in abbpreviationsAtPrefix)
+                {
+                    var index = ret.IndexOf(k);
+                    if (index == -1)
+                    {
+                        continue;
+                    }
+                    ret = ret.Substring(index + k.Length);
+                }
+                return ret.Trim();
+            }
+        }
+
         /// <summary>placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &c.</summary>
         private static char VERB_HAS_SUFFIXES = '*';
 
@@ -211,7 +327,7 @@ namespace Cregeen
     }
 
 
-    public enum Abbreviations
+    public enum Abbreviation
     {
         Adjective, 
         Adverb, 
@@ -226,13 +342,13 @@ namespace Cregeen
         Diminutive, 
         Emphatically, 
         FeminineGender, 
-        GalicGrGaelic, 
+        GalicOrGaelic, 
         HebrewAndBookOfHebrews, 
         TheSameAsAbove, 
         Interjection, 
         Literally, 
         Pronominal, 
-        Plural, 
+        HasPlural, 
         PrepositionAndPronoun, 
         Preposition, 
         Pronoun, 
