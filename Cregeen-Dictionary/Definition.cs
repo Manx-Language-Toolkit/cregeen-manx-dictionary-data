@@ -193,27 +193,61 @@ public class Definition
                     .Trim()
                 ;
 
-            // strip prefixed abbreviations (and anything before them)
-            var prefixes = PrefixToAbbreviation.Keys
-                .Concat(new[]
-                {
-                    "8.",
-                    ",",
-                })
-                .OrderByDescending(x => x.Length).ToList();
-            while (prefixes.Any(x => ret.StartsWith(x)))
-            {
-                var prefix = prefixes.First(prefix => ret.StartsWith(prefix));
-                ret = TrimBefore(ret, prefix).Trim();
-            }
-            // except plural - we only want to strip that if it comes first. 
-            // Example:  <definition> pl. see enmyn.
-            if (ret.Trim().StartsWith("pl."))
-            {
-                ret = TrimBefore(ret, "pl.");
-            }
-            return ret.Trim();
+            var ret1 = StripPrefixes(ret);
+            var ret2 = StripSuffixes(ret1);
+            return ret2.Trim();
         }
+    }
+
+    private static string StripSuffixes(string ret)
+    {
+        
+        var suffixes = SuffixUtils.Suffixes
+            .Concat(new[]
+            {
+                ";",
+                ",",
+            }).ToList();
+        
+        // trim a full stop, only if we have a match as well
+        if (suffixes.Any(x => ret.EndsWith(x + ".")))
+        {
+            ret = ret[..^1]; 
+        }
+        
+        while (suffixes.Any(x => ret.EndsWith(x)))
+        {
+            var suffix = suffixes.First(suffix => ret.EndsWith(suffix));
+            ret = TrimAfter(ret, suffix).Trim();
+        }
+
+        return ret;
+    }
+
+    private static string StripPrefixes(string ret)
+    {
+        // strip prefixed abbreviations (and anything before them)
+        var prefixes = PrefixToAbbreviation.Keys
+            .Concat(new[]
+            {
+                "8.",
+                ",",
+            })
+            .OrderByDescending(x => x.Length).ToList();
+        while (prefixes.Any(x => ret.StartsWith(x)))
+        {
+            var prefix = prefixes.First(prefix => ret.StartsWith(prefix));
+            ret = TrimBefore(ret, prefix).Trim();
+        }
+
+        // except plural - we only want to strip that if it comes first. 
+        // Example:  <definition> pl. see enmyn.
+        if (ret.Trim().StartsWith("pl."))
+        {
+            ret = TrimBefore(ret, "pl.");
+        }
+
+        return ret;
     }
 
     private static string TrimBefore(string input, string prefix)
@@ -224,6 +258,16 @@ public class Definition
             return input;
         }
         return input.Substring(index + prefix.Length);
+    }
+    
+    private static string TrimAfter(string input, string prefix)
+    {
+        var index = input.LastIndexOf(prefix, StringComparison.Ordinal);
+        if (index == -1)
+        {
+            return input;
+        }
+        return input[..index];
     }
 
     /// <summary>placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &amp;c.</summary>
