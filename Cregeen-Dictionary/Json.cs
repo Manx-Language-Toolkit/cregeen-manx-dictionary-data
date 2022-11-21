@@ -18,9 +18,9 @@ namespace Cregeen
 
                 if (property.PropertyType != typeof(string))
                 {
-                    if (property.PropertyType.GetInterface("IEnumerable") != null)
+                    if (property.PropertyType!.GetInterface("IEnumerable") != null)
                         property.ShouldSerialize =
-                            instance => (instance?.GetType().GetProperty(property.PropertyName).GetValue(instance) as IEnumerable<object>)?.Count() > 0;
+                            instance => (instance.GetType().GetProperty(property.PropertyName!)!.GetValue(instance) as IEnumerable<object>)?.Count() > 0;
                 }
                 return property;
             }

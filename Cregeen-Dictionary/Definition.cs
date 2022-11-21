@@ -81,7 +81,7 @@ namespace Cregeen
             var word = split.First();
 
             // Certain headwords (cummey, jeear) appear both with and without definitions
-            string definition = null;
+            string definition = "";
             {
                 try
                 {
@@ -91,7 +91,7 @@ namespace Cregeen
                 {
                     if (!HeadWordsWithNoDefinitions.Contains(word.Trim()))
                     {
-                        Console.WriteLine($"error: {word}");
+                        throw new NotImplementedException();
                     }
                 }
             }
@@ -143,7 +143,7 @@ namespace Cregeen
 
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        public Definition Parent { get; private set; }
+        public Definition? Parent { get; private set; }
 
         /// <summary>The HTML of the headword(s) for the entry</summary>
         public string Heading => _originalWord;

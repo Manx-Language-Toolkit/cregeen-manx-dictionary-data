@@ -53,6 +53,7 @@ namespace Cregeen
                 .Take(3451)  // and suffix
                 .Select(Headword.FromHtml)
                 .Where(x => x != null)
+                .Select(x => x!)
                 .ToList();
 
             VerifyHeadwords(headwords);
@@ -270,6 +271,7 @@ namespace Cregeen
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "PropertyCanBeMadeInitOnly.Global")]
+#pragma warning disable CS8618
     public class OutDef
     {
         public string[] Words { get; set; }
@@ -300,4 +302,5 @@ namespace Cregeen
             return document.DocumentNode.OuterHtml;
         }
     }
+#pragma warning restore CS8618
 }
