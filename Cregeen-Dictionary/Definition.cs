@@ -31,7 +31,7 @@ namespace Cregeen
         public string Extra { get; }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public string Entry => DecodeString(Extra);
+        public string Entry { get; }
 
         public List<Definition> Children { get; } = new();
 
@@ -49,8 +49,17 @@ namespace Cregeen
             _originalWord = word;
             _originalExtra = extra;
             Word = DecodeString(word);
+            
+            
             Extra = extra;
+            var potentialEntry = DecodeString(Extra);
+            var (derivativeMarking, entry2) = DerivativeMarking.ParseDerivativeMarking(potentialEntry);
+            DerivedFromLetter = derivativeMarking;
+            Entry = entry2;
         }
+
+        /// <summary>Defines the letter this derivative/aspiration should be listed under</summary>
+        public DerivativeMarking? DerivedFromLetter { get;  }
 
         [Pure]
         internal static Definition FromHtml(string arg1)

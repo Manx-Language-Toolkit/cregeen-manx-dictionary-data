@@ -45,18 +45,20 @@ namespace Cregeen_Dictionary.Test
             var eHaght = Get(0);
             Assert.That(eHaght.PossibleWords, Is.EquivalentTo(new[] { "e haght", "haght" }));
             Assert.That(eHaght.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.Substantive }));
-            Assert.That(eHaght.EntryText, Is.EqualTo("her skill, &c. A"));
-            // TODO: A ... at the end of a line shows that the word is a derivative or aspiration of one whose initial radically is A 
+            Assert.That(eHaght.EntryText, Is.EqualTo("her skill, &c."));
+            Assert.That(eHaght.DerivedFromLetter?.Marking, Is.EqualTo("A"));
 
             var gaght = Get(1);
             Assert.That(gaght.PossibleWords, Is.EquivalentTo(new[] { "gaght", "gaghtagh", "gaghtee", "gaghtin", "gaghtins", "gaghtym", "gaghtyms", "gaghtys" }));
             Assert.That(gaght.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.Verb }));
-            Assert.That(gaght.EntryText, Is.EqualTo("act, behave; A"));
+            Assert.That(gaght.EntryText, Is.EqualTo("act, behave;"));
+            Assert.That(gaght.DerivedFromLetter?.Marking, Is.EqualTo("A"));
 
             var gaghtey = Get(2);
             Assert.That(gaghtey.PossibleWords, Is.EquivalentTo(new[] { "gaghtey" }));
             Assert.That(gaghtey.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.Verb }));
-            Assert.That(gaghtey.EntryText, Is.EqualTo("acting, behaving. A"));
+            Assert.That(gaghtey.EntryText, Is.EqualTo("acting, behaving."));
+            Assert.That(gaghtey.DerivedFromLetter?.Marking, Is.EqualTo("A"));
 
             var aghtal = Get(3);
             Assert.That(aghtal.PossibleWords, Is.EquivalentTo(new[] { "aghtal" }));
