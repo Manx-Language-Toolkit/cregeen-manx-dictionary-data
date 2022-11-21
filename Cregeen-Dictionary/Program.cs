@@ -218,9 +218,17 @@ namespace Cregeen
             // Display the issues
             var issues = withParen.Concat(maybeInvalid).Concat(failedRegex).ToList();
             Console.WriteLine($"Found {issues.Count} issues");
-            foreach (var issue in issues)
+            foreach (var issue in withParen)
             {
-                Console.WriteLine(issue.Trim());
+                Console.WriteLine("paren: " + issue.Trim());
+            }
+            foreach (var issue in maybeInvalid)
+            {
+                Console.WriteLine("maybeInvalid: " + issue.Trim());
+            }
+            foreach (var issue in failedRegex)
+            {
+                Console.WriteLine("failedRegex: " + issue.Trim());
             }
 
             // Write the JSON to a file
