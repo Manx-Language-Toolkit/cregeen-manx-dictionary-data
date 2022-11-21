@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +9,8 @@ namespace Cregeen
     {
         public Headword(Definition def)
         {
-            this.Definition = def;
-            this.Definition.Depth = -1;
+            Definition = def;
+            Definition.Depth = -1;
         }
 
         public Definition Definition { get; }

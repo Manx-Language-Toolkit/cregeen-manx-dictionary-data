@@ -10,7 +10,7 @@ namespace Cregeen
     {
         public class ShouldSerializeContractResolver : DefaultContractResolver
         {
-            public static readonly ShouldSerializeContractResolver Instance = new ShouldSerializeContractResolver();
+            public static readonly ShouldSerializeContractResolver Instance = new();
 
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
@@ -26,7 +26,7 @@ namespace Cregeen
             }
         }
 
-        public static JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+        public static JsonSerializerSettings JsonSettings = new()
         {
             Formatting = Formatting.Indented,
             NullValueHandling = NullValueHandling.Ignore,
