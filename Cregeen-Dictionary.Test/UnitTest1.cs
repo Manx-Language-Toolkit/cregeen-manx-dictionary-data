@@ -1,3 +1,4 @@
+using System;
 using Cregeen;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -73,13 +74,54 @@ namespace Cregeen_Dictionary.Test
 
             List<Definition> def = GetDefinitions(html);
 
-            Assert.That(def.SelectMany(x => x.AllChildren.SelectMany(x => x.PossibleWords)), Does.Contain("gheulagh")); //gheul + -agh
-            Assert.That(def.SelectMany(x => x.AllChildren.SelectMany(x => x.PossibleWords)), Does.Not.Contain("gheuley"));
+            // gheuley exists outside triangular braces: &lt;<b>gheul</b> or&gt; <b>gheuley</b>,<i> s. </i>his gyve or fetter.<br>
+            // But it should not be under 'gheul'
+            Assert.That(def.AllPossibleWords(), Does.Contain("gheulagh")); //gheul + -agh
+            
+            var gheul = def.Single(x => x.Word.Trim() == "gheul*");
+            Assert.That(gheul.AllPossibleWords(), Does.Not.Contain("gheuley"));
+        }
+        
+        [Test]
+        public void BoldWordIsIncluded()
+        {
+            // When I was searching, I occasionally want to look up 'hroggal'. The HTML is:
+            // 
+            var html = GetTestData("hroggal");
+
+            List<Definition> def = GetDefinitions(html);
+
+            var dyHroggal = def.Single(x => x.Word.Trim() == "dy hroggal");
+            Assert.That(dyHroggal.AllPossibleWords(), Does.Contain("hroggal"));
+        }
+        
+        [Test]
+        public void FaaseEndToEndTest()
+        {
+            // ensure that '&#8209;' is not encoded
+            var html = GetTestData("faase");
+
+            List<Definition> def = GetDefinitions(html);
+
+            Assert.That(def.AllPossibleWords(), Does.Contain("follym-faase"));
+            Assert.That(def.AllPossibleWords(), Does.Not.Contain("follym&#8209;faase"));
         }
 
-        private static List<Definition> GetDefinitions(string html)
-        {
-            return Headword.ConvertToDefinitions(html);
-        }
+        private static List<Definition> GetDefinitions(string html) => Headword.ConvertToDefinitions(html);
+
+        private static string GetTestData(string resource) => GetResource($"Cregeen_Dictionary.Test.TestData.{resource}.html");
+    }
+}
+
+
+public static class Extensions
+{
+    public static IEnumerable<String> AllPossibleWords(this IEnumerable<Definition> d)
+    {
+        return d.SelectMany(AllPossibleWords);
+    }
+    public static IEnumerable<String> AllPossibleWords(this Definition d)
+    {
+        return d.AllChildren.SelectMany(x => x.PossibleWords);
     }
 }

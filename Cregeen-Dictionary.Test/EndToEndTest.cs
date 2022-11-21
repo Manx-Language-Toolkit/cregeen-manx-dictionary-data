@@ -42,7 +42,7 @@ namespace Cregeen_Dictionary.Test
             Definition Get(int k) => aght.Definition.Children.Skip(k).First();
 
             var e_haght = Get(0);
-            Assert.That(e_haght.PossibleWords, Is.EquivalentTo(new[] { "e haght" }));
+            Assert.That(e_haght.PossibleWords, Is.EquivalentTo(new[] { "e haght", "haght" }));
             Assert.That(e_haght.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.Substantive }));
             Assert.That(e_haght.EntryText, Is.EqualTo("her skill, &c. A"));
             // TODO: A ... at the end of a line shows that the word is a derivative or aspiration of one whose initial radically is A 
