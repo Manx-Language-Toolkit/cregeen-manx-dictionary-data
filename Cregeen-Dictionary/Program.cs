@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using static Cregeen.AbbreviationExtensions;
 
 namespace Cregeen
 {
@@ -279,6 +280,7 @@ namespace Cregeen
         public string[] Words { get; set; }
         public string EntryHtml { get; set; }
         public string HeadingHtml { get; set; }
+        public List<string> PartsOfSpeech { get; set; }
         public OutDef[] Children { get; set; }
 
         internal static OutDef FromDef(Headword def)
@@ -291,6 +293,7 @@ namespace Cregeen
             return new OutDef
             {
                 Words = def.PossibleWords.ToArray(),
+                PartsOfSpeech = def.Abbreviations.SelectMany(x => x.GetPartsOfSpeech()).ToHashSet().Select(x => x.ToString()).ToList(),
                 EntryHtml = FixUnclosedTags(def.Extra),
                 HeadingHtml = FixUnclosedTags(def.Heading),
                 Children = def.Children.Select(FromDef).ToArray()
