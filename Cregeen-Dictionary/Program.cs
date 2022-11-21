@@ -61,6 +61,8 @@ namespace Cregeen
             // All words - not just headwords
             var allWordDefinitions = headwords.SelectMany(x => x.All);
 
+            // TODO: How do we handle ennym + enn*-ym
+            
             HashSet<string> ok = new HashSet<string>()
             {
                 // ReSharper disable StringLiteralTypo
