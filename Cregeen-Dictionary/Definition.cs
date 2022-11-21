@@ -190,12 +190,21 @@ public class Definition
                     .Replace(" ‑ym;", "")
                     .Replace(" ‑yms;", "")
                     .Replace(" ‑ys, 94.", "")
+                    .Trim()
                 ;
 
             // strip prefixed abbreviations (and anything before them)
-            foreach (var prefix in PrefixToAbbreviation.Keys.Except(new[] { "pl."}))
+            var prefixes = PrefixToAbbreviation.Keys
+                .Concat(new[]
+                {
+                    "8.",
+                    ",",
+                })
+                .OrderByDescending(x => x.Length).ToList();
+            while (prefixes.Any(x => ret.StartsWith(x)))
             {
-                ret = TrimBefore(ret, prefix);
+                var prefix = prefixes.First(prefix => ret.StartsWith(prefix));
+                ret = TrimBefore(ret, prefix).Trim();
             }
             // except plural - we only want to strip that if it comes first. 
             // Example:  <definition> pl. see enmyn.
