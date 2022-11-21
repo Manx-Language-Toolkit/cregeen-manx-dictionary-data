@@ -65,7 +65,8 @@ internal class Headword
     internal static List<Definition> ConvertToDefinitions(string html)
     {
         // Note: We change <br> to <br/> for an explicit newline
-        var definitions = html.Split("<br>").Select(Definition.FromHtml).ToList();
+        var lines = html.Split("<br>");
+        var definitions = lines.Select(Definition.FromHtml).ToList();
         
         // Handle ".id" in the text == Same As Above
         foreach (var (definition, i) in definitions.Select((x,i) => (x,i)))
