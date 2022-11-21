@@ -19,4 +19,6 @@ public static class ResourceFetcher
         return tr.ReadToEnd();
 
     }
+    
+    public static string GetTestData(string resource) => GetResource($"Cregeen_Dictionary.Test.TestData.{resource}.html");
 }

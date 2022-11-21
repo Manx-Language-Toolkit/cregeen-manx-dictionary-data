@@ -1,6 +1,8 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Aght/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=aghtal/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Baccagh/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Baccee/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=bastal/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=booie/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=caagh/@EntryIndexedValue">True</s:Boolean>
@@ -25,5 +27,8 @@
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=laee/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=lheh/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=lhoys/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Maccagh/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Manks/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/UserDictionary/Words/=sheyn/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=sbaccagh/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=sheyn/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Vaccagh/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

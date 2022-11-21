@@ -40,7 +40,7 @@ public class EndToEndTest
         Assert.That(aght.Definition.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.SubstantiveMasculine, Abbreviation.HasPlural })); // TODO: needs the plural marked
         Assert.That(aght.Definition.EntryText, Is.EqualTo("art, skill, behaviour, demeanor, gait, plight, way;"));
 
-        Definition Get(int k) => aght.Definition.Children.Skip(k).First();
+        Definition Get(int k) => GetDefinition(aght, k);
 
         var eHaght = Get(0);
         Assert.That(eHaght.PossibleWords, Is.EquivalentTo(new[] { "e haght", "haght" }));
@@ -67,4 +67,45 @@ public class EndToEndTest
 
         Assert.Inconclusive();
     }
+
+    
+    [Test]
+    public void Baccagh()
+    {
+        var html = GetTestData("baccagh");
+        
+        // ReSharper disable CommentTypo
+        /*
+baccagh, a. halt, maimed. 
+s’baccagh, a. how halt or maimed B 
+s’baccee, a. id., comp. and sup. B
+baccagh, s. m. a person halt or disabled; pl. 71 [change  agh to  ee]. 
+yn vaccagh, s. the halt person. B
+nyn maccagh, s. your, &c. halt, &c. person. B
+
+         */
+        // ReSharper enable CommentTypo
+        var baccagh = Headword.FromHtmlUnsafe(html);
+        
+        Assert.That(baccagh.Definition.PossibleWords, Is.EquivalentTo(new[] { "baccagh" }));
+        Assert.That(baccagh.Definition.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.Adjective }));
+        Assert.That(baccagh.Definition.EntryText, Is.EqualTo("halt, maimed."));
+
+        Definition Get(int k) => GetDefinition(baccagh, k);
+
+        var sbaccagh = Get(0);
+        Assert.That(sbaccagh.EntryText, Is.EqualTo("how halt or maimed"));
+        var sBaccee = Get(1);
+        Assert.That(sBaccee.EntryText, Is.EqualTo("how halt or maimed")); // id. means identical to the previous
+        var baccaghSm = Get(2);
+        Assert.That(baccaghSm.EntryText, Is.Not.Empty);
+        var ynVaccagh = Get(3);
+        Assert.That(ynVaccagh.EntryText, Is.Not.Empty);
+        var nynMaccagh = Get(4);
+        Assert.That(nynMaccagh.EntryText, Is.Not.Empty);
+        
+        Assert.Inconclusive();
+    }
+
+    private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
 }

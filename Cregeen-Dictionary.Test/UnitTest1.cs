@@ -109,7 +109,6 @@ namespace Cregeen_Dictionary.Test
 
         private static List<Definition> GetDefinitions(string html) => Headword.ConvertToDefinitions(html);
 
-        private static string GetTestData(string resource) => GetResource($"Cregeen_Dictionary.Test.TestData.{resource}.html");
     }
 }
 
