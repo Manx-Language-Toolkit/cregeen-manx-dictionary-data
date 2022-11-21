@@ -192,18 +192,29 @@ public class Definition
                     .Replace(" ‑ys, 94.", "")
                 ;
 
-            // strip prefixed abbreviations
-            foreach (var (k,_) in PrefixToAbbreviation)
+            // strip prefixed abbreviations (and anything before them)
+            foreach (var prefix in PrefixToAbbreviation.Keys.Except(new[] { "pl."}))
             {
-                var index = ret.IndexOf(k, StringComparison.Ordinal);
-                if (index == -1)
-                {
-                    continue;
-                }
-                ret = ret.Substring(index + k.Length);
+                ret = TrimBefore(ret, prefix);
+            }
+            // except plural - we only want to strip that if it comes first. 
+            // Example:  <definition> pl. see enmyn.
+            if (ret.Trim().StartsWith("pl."))
+            {
+                ret = TrimBefore(ret, "pl.");
             }
             return ret.Trim();
         }
+    }
+
+    private static string TrimBefore(string input, string prefix)
+    {
+        var index = input.IndexOf(prefix, StringComparison.Ordinal);
+        if (index == -1)
+        {
+            return input;
+        }
+        return input.Substring(index + prefix.Length);
     }
 
     /// <summary>placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &amp;c.</summary>
