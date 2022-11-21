@@ -44,6 +44,7 @@ public static class Abbreviations
         ["syn."] = Synonymous,
         ["v. i."] = VerbImperative,
         ["v."] = Abbreviation.Verb,
+        ["comp. and sup."] = ComparativeDegree, // TODO: This is BOTH
     };
 
     public static List<Abbreviation> ParseAbbreviations(string toParse)

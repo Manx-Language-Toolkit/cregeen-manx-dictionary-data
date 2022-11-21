@@ -120,5 +120,14 @@ nyn maccagh, s. your, &c. halt, &c. person. B
         Assert.That(definition.EntryText, Is.EqualTo("greaves [OED: Branches, twigs]."));
     }
     
+    [Test]
+    public void DaHtml()
+    {
+        var html = GetTestData("da");
+        var da = Headword.FromHtmlUnsafe(html);
+        Assert.That(da.Definition.Word, Is.EqualTo("da"));
+        Assert.That(da.Definition.EntryText, Does.StartWith("to him, for him, him, to, for; as, chur mee da eh (I gave it to him); te aym da (I have it for him); lhig da (let him); eeck da Cesar (pay to Cesar); ‑syn, id. em. "));
+    }
+    
     private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
 }
