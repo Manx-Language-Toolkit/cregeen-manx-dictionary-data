@@ -38,7 +38,7 @@ public class EndToEndTest
 
         Assert.That(aght.Definition.PossibleWords, Is.EquivalentTo(new[] { "aght", "aghtyn" }));
         Assert.That(aght.Definition.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.SubstantiveMasculine, Abbreviation.HasPlural })); // TODO: needs the plural marked
-        Assert.That(aght.Definition.EntryText, Is.EqualTo("art, skill, behaviour, demeanor, gait, plight, way;"));
+        Assert.That(aght.Definition.EntryText, Is.EqualTo("art, skill, behaviour, demeanor, gait, plight, way"));
 
         Definition Get(int k) => GetDefinition(aght, k);
 
@@ -51,7 +51,7 @@ public class EndToEndTest
         var gaght = Get(1);
         Assert.That(gaght.PossibleWords, Is.EquivalentTo(new[] { "gaght", "gaghtagh", "gaghtee", "gaghtin", "gaghtins", "gaghtym", "gaghtyms", "gaghtys" }));
         Assert.That(gaght.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.Verb }));
-        Assert.That(gaght.EntryText, Is.EqualTo("act, behave;"));
+        Assert.That(gaght.EntryText, Is.EqualTo("act, behave"));
         Assert.That(gaght.DerivedFromLetter?.Marking, Is.EqualTo("A"));
 
         var gaghtey = Get(2);
@@ -127,6 +127,16 @@ nyn maccagh, s. your, &c. halt, &c. person. B
         var da = Headword.FromHtmlUnsafe(html);
         Assert.That(da.Definition.Word, Is.EqualTo("da"));
         Assert.That(da.Definition.EntryText, Does.StartWith("to him, for him, him, to, for; as, chur mee da eh (I gave it to him); te aym da (I have it for him); lhig da (let him); eeck da Cesar (pay to Cesar); ‑syn, id. em. "));
+    }
+
+    [Test]
+    public void SoylTest()
+    {
+        // improves suffix stripping
+        var html = GetTestData("soyl");
+        var soyl = Headword.FromHtmlUnsafe(html);
+        
+        Assert.That(soyl.Definition.EntryText, Is.EqualTo("compare, typify"));
     }
     
     private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
