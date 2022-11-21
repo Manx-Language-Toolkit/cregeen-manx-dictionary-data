@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using static Cregeen.Abbreviation;
+using static Cregeen.AbbreviationExtensions.Gender;
 using static Cregeen.AbbreviationExtensions.PartOfSpeech;
 
 namespace Cregeen;
@@ -93,6 +94,7 @@ public static class Abbreviations
 
 public enum Abbreviation
 {
+    // There is no 'm.' listed in the abbreviations for masculine
     Adjective, 
     Adverb, 
     AdjectiveDerivative, 
@@ -178,5 +180,21 @@ public static class AbbreviationExtensions
     public enum PartOfSpeech
     {
         Noun, Pronoun, Verb, Adjective, Adverb, Preposition, Conjunction, Interjection, Article
+    }
+
+    private static readonly Dictionary<Abbreviation, IList<Gender>> Genders = new()
+    {
+        [SubstantiveFeminine] = new[] { Feminine },
+        [SubstantiveMasculine] = new[] { Masculine },
+        [DoMasculineAndFeminine] = new[] { Masculine, Feminine },
+        [FeminineGender] = new[] { Feminine },
+    };
+    
+    public static IList<Gender> GetGender(this Abbreviation abbreviation) =>
+        Genders.GetValueOrDefault(abbreviation, new List<Gender>());
+
+    public enum Gender
+    {
+        Masculine, Feminine
     }
 }
