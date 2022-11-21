@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using static Cregeen.Abbreviation;
+using static Cregeen.AbbreviationExtensions.PartOfSpeech;
 
 namespace Cregeen;
 
@@ -6,39 +8,40 @@ public static class Abbreviations
 {
     public static readonly Dictionary<string, Abbreviation> PrefixToAbbreviation = new()
     {
-        ["a. d."] = Abbreviation.AdjectiveDerivative,
-        ["a. pl."] = Abbreviation.AdjectivePlural,
+        ["a. d."] = AdjectiveDerivative,
+        ["a. pl."] = AdjectivePlural,
         ["a."] = Abbreviation.Adjective,
-        ["adv. p."] = Abbreviation.AdverbAndPronoun,
+        ["adv. p."] = AdverbAndPronoun,
         ["adv."] = Abbreviation.Adverb,
-        ["comp."] = Abbreviation.ComparativeDegree,
+        ["comp."] = ComparativeDegree,
         ["comj."] = Abbreviation.Conjunction,
-        ["c. p."] = Abbreviation.ConjunctionAndPronoun,
-        ["dim."] = Abbreviation.Diminutive,
-        ["em."] = Abbreviation.Emphatically,
-        ["f."] = Abbreviation.FeminineGender,
-        ["Gal."] = Abbreviation.GalicOrGaelic,
-        ["Heb."] = Abbreviation.HebrewAndBookOfHebrews,
-        ["id."] = Abbreviation.TheSameAsAbove,
-        ["idem."] = Abbreviation.TheSameAsAbove,
+        ["c. p."] = ConjunctionAndPronoun,
+        ["dim."] = Diminutive,
+        ["em."] = Emphatically,
+        ["f."] = FeminineGender,
+        ["Gal."] = GalicOrGaelic,
+        ["Heb."] = HebrewAndBookOfHebrews,
+        ["id."] = TheSameAsAbove,
+        ["idem."] = TheSameAsAbove,
         ["in."] = Abbreviation.Interjection,
-        ["lit."] = Abbreviation.Literally,
-        ["p. p."] = Abbreviation.PrepositionAndPronoun,
-        ["p."] = Abbreviation.Pronominal,
-        ["pl."] = Abbreviation.HasPlural,
+        ["lit."] = Literally,
+        ["p. p."] = PrepositionAndPronoun,
+        ["p."] = Pronominal,
+        ["pl."] = HasPlural,
         ["pre."] = Abbreviation.Preposition,
         ["pro."] = Abbreviation.Pronoun,
-        ["Prov."] = Abbreviation.ManksProverb,
-        ["pt."] = Abbreviation.Participle,
-        ["sing."] = Abbreviation.Singular,
-        ["s. m. f."] = Abbreviation.DoMasculineAndFeminine, // TODO: Combine
-        ["s. m."] = Abbreviation.SubstantiveMasculine,
-        ["s. pl."] = Abbreviation.SubstantivePlural,
-        ["s. f."] = Abbreviation.SubstantiveFeminine,
-        ["s."] = Abbreviation.Substantive,
-        ["sup."] = Abbreviation.SuperlativeDegree,
-        ["syn."] = Abbreviation.Synonymous,
-        ["v. i."] = Abbreviation.VerbImperative,
+        ["Prov."] = ManksProverb,
+        ["pt."] = Participle,
+        ["sing."] = Singular,
+        ["s. m. f."] = DoMasculineAndFeminine, // TODO: Combine
+        ["s. m."] = SubstantiveMasculine,
+        ["s. pl."] = SubstantivePlural,
+        ["s. f."] = SubstantiveFeminine,
+        ["s."] = Substantive,
+        ["sup."] = SuperlativeDegree,
+        // TODO: feeaghyn
+        ["syn."] = Synonymous,
+        ["v. i."] = VerbImperative,
         ["v."] = Abbreviation.Verb,
     };
 
@@ -53,32 +56,32 @@ public static class Abbreviations
             }
         }
 
-        if (ret.Contains(Abbreviation.Substantive) && 
-            (ret.Contains(Abbreviation.SubstantiveFeminine) || 
-             ret.Contains(Abbreviation.SubstantiveMasculine) || 
-             ret.Contains(Abbreviation.SubstantivePlural)))
+        if (ret.Contains(Substantive) && 
+            (ret.Contains(SubstantiveFeminine) || 
+             ret.Contains(SubstantiveMasculine) || 
+             ret.Contains(SubstantivePlural)))
         {
-            ret.Remove(Abbreviation.Substantive);
+            ret.Remove(Substantive);
         }
 
         if (ret.Contains(Abbreviation.Adjective) &&
-            (ret.Contains(Abbreviation.AdjectiveDerivative) ||
-             ret.Contains(Abbreviation.AdjectivePlural)))
+            (ret.Contains(AdjectiveDerivative) ||
+             ret.Contains(AdjectivePlural)))
         {
             ret.Remove(Abbreviation.Adjective);
         }
 
-        if (ret.Contains(Abbreviation.Adverb) && ret.Contains(Abbreviation.AdverbAndPronoun))
+        if (ret.Contains(Abbreviation.Adverb) && ret.Contains(AdverbAndPronoun))
         {
             ret.Remove(Abbreviation.Adverb);
         }
 
-        if (ret.Contains(Abbreviation.Article) && ret.Contains(Abbreviation.ArticlePlural))
+        if (ret.Contains(Abbreviation.Article) && ret.Contains(ArticlePlural))
         {
             ret.Remove(Abbreviation.Article);
         }
 
-        if (ret.Contains(Abbreviation.Verb) && ret.Contains(Abbreviation.VerbImperative))
+        if (ret.Contains(Abbreviation.Verb) && ret.Contains(VerbImperative))
         {
             ret.Remove(Abbreviation.Verb);
         }
@@ -125,4 +128,55 @@ public enum Abbreviation
     Synonymous,
     Verb,
     VerbImperative,
+}
+
+public static class AbbreviationExtensions
+{
+    
+    // noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection, article
+    private static readonly Dictionary<Abbreviation, IList<PartOfSpeech>> PartsOfSpeech = new()
+    {
+        // nouns
+        [Substantive] = new[] {Noun},
+        [SubstantiveFeminine] = new[] {Noun},
+        [SubstantiveMasculine] = new[] {Noun},
+        [DoMasculineAndFeminine] = new[] {Noun}, 
+        [SubstantivePlural] = new[] {Noun},
+        // pronouns
+        [Abbreviation.Pronoun] = new []{ PartOfSpeech.Pronoun}, 
+        [Pronominal] = new []{PartOfSpeech.Pronoun}, 
+        [ConjunctionAndPronoun] = new []{PartOfSpeech.Pronoun, PartOfSpeech.Conjunction}, 
+        [AdverbAndPronoun] = new []{PartOfSpeech.Pronoun, PartOfSpeech.Adverb}, 
+        [PrepositionAndPronoun] = new []{PartOfSpeech.Pronoun, PartOfSpeech.Preposition}, 
+        // verbs
+        [Abbreviation.Verb] = new []{PartOfSpeech.Verb}, 
+        [VerbImperative] = new []{PartOfSpeech.Verb},  // TODO
+        // adjective
+        [Abbreviation.Adjective] = new[] {PartOfSpeech.Adjective},
+        [AdjectiveDerivative] = new[] {PartOfSpeech.Adjective},
+        [AdjectivePlural] = new[] {PartOfSpeech.Adjective},
+        // adverb
+        [Abbreviation.Adverb] = new[] {PartOfSpeech.Adverb}, 
+        // [AdverbAndPronoun] = new[] {PartOfSpeech.Adverb}, 
+        // preposition
+        [Abbreviation.Preposition] = new[] {PartOfSpeech.Preposition}, 
+        // [PrepositionAndPronoun] = new[] {PartOfSpeech.Preposition}, 
+        // conjunction
+        [Abbreviation.Conjunction] = new[] {PartOfSpeech.Conjunction}, 
+        // [ConjunctionAndPronoun] = new[] {PartOfSpeech.Conjunction}, 
+        // interjection
+        [Abbreviation.Interjection] = new[] {PartOfSpeech.Interjection}, 
+        // article
+        [Abbreviation.Article] = new[] {PartOfSpeech.Article},  
+        [ArticlePlural] = new[] {PartOfSpeech.Article}, 
+        // additional
+        // ComparativeDegree, SuperlativeDegree, 
+        // Diminutive
+    };
+    public static IList<PartOfSpeech> GetPartsOfSpeech(this Abbreviation abbreviation) => PartsOfSpeech.GetValueOrDefault(abbreviation, new List<PartOfSpeech>());
+    
+    public enum PartOfSpeech
+    {
+        Noun, Pronoun, Verb, Adjective, Adverb, Preposition, Conjunction, Interjection, Article
+    }
 }
