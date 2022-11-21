@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using System;
+using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -64,6 +65,63 @@ internal class Headword
     internal static List<Definition> ConvertToDefinitions(string html)
     {
         // Note: We change <br> to <br/> for an explicit newline
-        return html.Split("<br>").Select(x => Definition.FromHtml(x)).ToList();
+        var definitions = html.Split("<br>").Select(Definition.FromHtml).ToList();
+        
+        // Handle ".id" in the text == Same As Above
+        foreach (var (definition, i) in definitions.Select((x,i) => (x,i)))
+        {
+            if (!definition.Abbreviations.Contains(Abbreviation.TheSameAsAbove))
+            {
+                continue;
+            }
+
+            if (i == 0)
+            {
+                Console.WriteLine("warn: found '.id' in first line: " + definition.Word); // + ":" + definition.Entry);
+                continue;
+            }
+
+            if (!SkippableEntryText.Contains(definition.EntryText.Trim()))
+            {
+                Console.WriteLine("warn: unexpected entry text:" + definition.Word + ":" + definition.EntryText);
+                definition.EntryTextOverride = definition.EntryText + Environment.NewLine + definitions[i - 1].EntryText;
+            }
+            else
+            {
+                definition.EntryTextOverride = definitions[i - 1].EntryText;
+            }
+        }
+
+        return definitions;
     }
+
+    private static readonly List<string> SkippableEntryText = new()
+    {
+        "",
+        "A",
+        "161.",
+        "[F]",
+        ", 58.",
+        ",] 58.",
+        "], 58.",
+        ",] 58.",
+        ",] 58. E",
+        ",] 58. M",
+        ",] 58. F",
+        ",] 58. F.",
+        ",] 58. L",
+        ",] 58. K",
+        ",] 58. M",
+        ",] 58. V",
+        ",] 58. W",
+        ",] 58. J",
+        ",] 58. G",
+        ",] 58. R",
+        ",] 58. P",
+        ",] 58. O",
+        ",] 58. T",
+        "E",
+        "O",
+        "F"
+    };
 }

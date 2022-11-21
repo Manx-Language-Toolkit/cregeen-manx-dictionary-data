@@ -161,10 +161,18 @@ public class Definition
 
     public List<Abbreviation> Abbreviations => ParseAbbreviations(Extra);
 
+    /// <summary>
+    /// Override for Entry text if <see cref="Abbreviation.TheSameAsAbove"/> is set.
+    /// </summary>
+    public string? EntryTextOverride { get; set; }
     public string EntryText
     {
         get
         {
+            if (EntryTextOverride != null)
+            {
+                return EntryTextOverride;
+            }
             var ret = DecodeString(Entry)
                     .TrimAfter("pl. ")
                     .Replace("\r\n", " ")
