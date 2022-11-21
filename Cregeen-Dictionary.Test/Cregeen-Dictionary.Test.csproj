@@ -26,6 +26,8 @@
     <EmbeddedResource Include="TestData\hroggal.html" />
     <EmbeddedResource Include="TestData\faase.html" />
     <EmbeddedResource Include="TestData\baccagh.html" />
+    <None Remove="TestData\grein-aadjyn.html" />
+    <EmbeddedResource Include="TestData\grein-aadjyn.html" />
   </ItemGroup>
 
   <ItemGroup>

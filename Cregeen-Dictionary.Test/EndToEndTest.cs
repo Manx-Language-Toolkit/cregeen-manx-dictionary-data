@@ -107,5 +107,18 @@ nyn maccagh, s. your, &c. halt, &c. person. B
         Assert.Inconclusive();
     }
 
+    [Test]
+    public void GreinAadjyn()
+    {
+        var html = GetTestData("grein-aadjyn");
+        var greinAadjyn = Headword.FromHtmlUnsafe(html);
+
+        var definition = greinAadjyn.Definition;
+        
+        Assert.That(definition.PossibleWords, Is.EquivalentTo(new[] { "grein-aadjyn"}));
+        Assert.That(definition.Abbreviations, Is.EquivalentTo(new[] { Abbreviation.SubstantivePlural, Abbreviation.HasPlural }));
+        Assert.That(definition.EntryText, Is.EqualTo("greaves [OED: Branches, twigs]."));
+    }
+    
     private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
 }

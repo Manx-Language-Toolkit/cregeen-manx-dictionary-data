@@ -284,6 +284,8 @@ public class OutDef
     /// Masculine/Feminine/Both
     /// </summary>
     public List<string> Gender { get; set; }
+    
+    public string EntryText { get; set; }
     public OutDef[] Children { get; set; }
 
     internal static OutDef FromDef(Headword def)
@@ -298,6 +300,7 @@ public class OutDef
             Words = def.PossibleWords.ToArray(),
             PartsOfSpeech = def.Abbreviations.SelectMany(x => x.GetPartsOfSpeech()).ToHashSet().Select(x => x.ToString()).ToList(),
             Gender = def.Abbreviations.SelectMany(x => x.GetGender()).ToHashSet().Select(gender => gender == AbbreviationExtensions.Gender.Feminine ? "f" : "m").ToList(),
+            EntryText = def.EntryText,
             EntryHtml = FixUnclosedTags(def.Extra),
             HeadingHtml = FixUnclosedTags(def.Heading),
             Children = def.Children.Select(FromDef).ToArray()
