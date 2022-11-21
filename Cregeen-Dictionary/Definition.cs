@@ -165,6 +165,10 @@ public class Definition
     /// Override for Entry text if <see cref="Abbreviation.TheSameAsAbove"/> is set.
     /// </summary>
     public string? EntryTextOverride { get; set; }
+    
+    /// <summary>
+    /// The definition of the word, exclusive of notes such as Examples or Bible verses.
+    /// </summary>
     public string EntryText
     {
         get
@@ -174,7 +178,9 @@ public class Definition
                 return EntryTextOverride;
             }
             var ret = DecodeString(Entry)
-                    .TrimAfter("pl. ")
+                    .TrimAfter("pl. -") // pl. -yn, pl. -ghyn. But don't trim after something like:
+                    .TrimAfter("pl. ‑") // and with the non-breaking hypen
+                    // grein-aadjyn, s. pl. <Definition>
                     .Replace("\r\n", " ")
                     .Replace("\n", " ") // Windows and Linux differ
                     .Replace(" ‑agh;", "")
