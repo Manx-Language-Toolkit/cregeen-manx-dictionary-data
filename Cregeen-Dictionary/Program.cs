@@ -2,15 +2,16 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Cregeen
 {
 
+    // ReSharper disable CommentTypo
     /**
      * This is a quick script which should take the following HTML document and convert it to a JSON output containing:
      * A tree of entries
@@ -27,13 +28,13 @@ namespace Cregeen
      *  * Parse the HTML to provide more context for the word (plural, adjective, etc...). We do not need the stress, as this is content
      *  * Handle 3-level nestings: "aa-" => "aa-chionnagh" => "aa-chionnit"
      */
-    class Program
+    // ReSharper restore CommentTypo
+    static class Program
     {
+        private const string FirstWord = "aa"; // technically: aa‑, but the non-breaking hyphen causes issues
+        private const string LastWord = "yskid";
 
-        private static string FIRST_WORD = "aa"; // technically: aa‑, but the non-breaking hyphen causes issues
-        private static string LAST_WORD = "yskid";
-
-        static void Main(string[] args)
+        public static void Main()
         {
             // This code is fairly lazy - main improvements would be to extract the 'verb/noun' into structured text, as well as the pronunciation.
 
@@ -61,6 +62,7 @@ namespace Cregeen
 
             HashSet<string> ok = new HashSet<string>()
             {
+                // ReSharper disable StringLiteralTypo
                 "yn niagh [sc. yn eagh]",
                 "lus ny chroshey (sic)",
                 "yn cherçheen (sic: stress)",
@@ -176,6 +178,7 @@ namespace Cregeen
                 // probably not OK
                 "nyn <maase or> maash",
                 "e <gheul or> gheuley",
+                // ReSharper restore StringLiteralTypo
             };
 
             List<string> maybeInvalid = new List<string>();
@@ -204,7 +207,7 @@ namespace Cregeen
 
                 var main = string.Join("\n", def.PossibleWords);
 
-                if (main.Contains("(") && !main.Contains("stress") && !main.Contains("sic") && !main.Contains("(sc"))
+                if (main.Contains('(') && !main.Contains("stress") && !main.Contains("sic") && !main.Contains("(sc"))
                 {
                     withParen.Add(main);
                 }
@@ -236,23 +239,21 @@ namespace Cregeen
             var outPath = Path.Combine(directory, "cregeen-v1.json");
             Console.WriteLine($"Writing to {outPath}");
             Directory.CreateDirectory(directory);
-            
-            using (StreamWriter sw = new StreamWriter(new FileStream(outPath, FileMode.Create), Encoding.UTF8))
-            {
-                sw.WriteLine(JsonConvert.SerializeObject(headwords.Select(headword => OutDef.FromDef(headword)), Json.JsonSettings));
-            }
+
+            using StreamWriter sw = new StreamWriter(new FileStream(outPath, FileMode.Create), Encoding.UTF8);
+            sw.WriteLine(JsonConvert.SerializeObject(headwords.Select(OutDef.FromDef), Json.JsonSettings));
         }
 
         private static void VerifyHeadwords(List<Headword> headwords)
         {
-            if (!headwords.First().Definition.Word.StartsWith(FIRST_WORD))
+            if (!headwords.First().Definition.Word.StartsWith(FirstWord))
             {
-                throw new InvalidOperationException($"data is missing. Expected: {FIRST_WORD}. Got: {headwords.First().Definition.Word}");
+                throw new InvalidOperationException($"data is missing. Expected: {FirstWord}. Got: {headwords.First().Definition.Word}");
             }
 
-            if (!headwords.Last().Definition.Word.StartsWith(LAST_WORD))
+            if (!headwords.Last().Definition.Word.StartsWith(LastWord))
             {
-                throw new InvalidOperationException($"data is missing. Expected: {LAST_WORD}. Got: {headwords.Last().Definition.Word}");
+                throw new InvalidOperationException($"data is missing. Expected: {LastWord}. Got: {headwords.Last().Definition.Word}");
             }
         }
 
@@ -266,6 +267,9 @@ namespace Cregeen
         }
     }
 
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "PropertyCanBeMadeInitOnly.Global")]
     public class OutDef
     {
         public string[] Words { get; set; }

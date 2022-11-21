@@ -9,17 +9,18 @@ using System.Web;
 
 namespace Cregeen
 {
-    [DebuggerDisplay("{originalWord}")]
+    [DebuggerDisplay("{_originalWord}")]
     public class Definition
     {
         /// <summary>
         /// Html word
         /// </summary>
-        private string originalWord;
+        private string _originalWord;
         /// <summary>
         /// Html Extra
         /// </summary>
-        private readonly string originalExtra;
+        // ReSharper disable once NotAccessedField.Local
+        private readonly string _originalExtra;
 
 
         /// <summary>
@@ -28,12 +29,13 @@ namespace Cregeen
         public string Word { get; }
         public string Extra { get; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Entry => DecodeString(Extra);
 
-        public List<Definition> Children { get; } = new List<Definition>();
+        public List<Definition> Children { get; } = new();
 
 
-        static HashSet<string> HeadWordsWithNoDefinitions = new HashSet<string>
+        static readonly HashSet<string> HeadWordsWithNoDefinitions = new()
         {
             "bastal", "booie", "by", "caagh", "co&#8209; prefix.", "cummey", "dyn", "erbee", "fenniu", "fy-",
             "gliee", "giyn",
@@ -41,10 +43,10 @@ namespace Cregeen
             "sheyn", "skew", "sprang-"
         };
 
-        public Definition(string word, string extra)
+        private Definition(string word, string extra)
         {
-            this.originalWord = word;
-            this.originalExtra = extra;
+            _originalWord = word;
+            _originalExtra = extra;
             Word = DecodeString(word);
             Extra = extra;
         }
@@ -65,7 +67,7 @@ namespace Cregeen
             if (split[0].Contains(". See"))
             {
                 var original = split[0];
-                var index = original.IndexOf(". See");
+                var index = original.IndexOf(". See", StringComparison.Ordinal);
                 split[0] = original.Substring(0, index);
                 if (split.Count == 1)
                 {
@@ -98,7 +100,7 @@ namespace Cregeen
 
         internal void AddChild(Definition node)
         {
-            this.Children.Add(node);
+            Children.Add(node);
             node.Parent = this;
         }
 
@@ -121,7 +123,7 @@ namespace Cregeen
             get
             {
                 // removing "sic" can cause duplicates
-                return getPossibleWords()
+                return GetPossibleWords()
                     .Select(x => x.Replace('‑', '-')
                         .Replace("’", "'")
                         .TrimAfter("[sic]", "(sic)", "[sic:", "(sic:")
@@ -130,20 +132,22 @@ namespace Cregeen
             }
         }
 
-        private int? depth = null;
+        private int? _depth;
         /// <summary>The nesting depth of an element is defined by the number of spaces before the word in the HTML</summary>
         public int Depth
         {
-            get => depth ?? Word.Length - Word.TrimStart().Length;
-            set => depth = value;
+            get => _depth ?? Word.Length - Word.TrimStart().Length;
+            set => _depth = value;
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public Definition Parent { get; private set; }
 
         /// <summary>The HTML of the headword(s) for the entry</summary>
-        public string Heading => this.originalWord;
+        public string Heading => _originalWord;
 
-        private Dictionary<string, Abbreviation> abbpreviationsAtPrefix = new Dictionary<string, Abbreviation>()
+        private readonly Dictionary<string, Abbreviation> _abbpreviationsAtPrefix = new()
         {
             ["a. d."] = Abbreviation.AdjectiveDerivative,
             ["a. pl."] = Abbreviation.AdjectivePlural,
@@ -186,7 +190,7 @@ namespace Cregeen
             get
             {
                 List<Abbreviation> ret = new List<Abbreviation>();
-                foreach (var (k, v) in abbpreviationsAtPrefix)
+                foreach (var (k, v) in _abbpreviationsAtPrefix)
                 {
                     if (Extra.Contains($" {k}") || Extra.StartsWith(k) || Extra.Contains($">{k}"))
                     {
@@ -246,9 +250,9 @@ namespace Cregeen
                     ;
 
                 // strip prefixed abreviations
-                foreach (var (k,v) in abbpreviationsAtPrefix)
+                foreach (var (k,_) in _abbpreviationsAtPrefix)
                 {
-                    var index = ret.IndexOf(k);
+                    var index = ret.IndexOf(k, StringComparison.Ordinal);
                     if (index == -1)
                     {
                         continue;
@@ -259,13 +263,13 @@ namespace Cregeen
             }
         }
 
-        /// <summary>placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &c.</summary>
-        private static char VERB_HAS_SUFFIXES = '*';
+        /// <summary>placed before such verbs where two are inserted, as, trog, the verb used alone; the one marked thus, trogg*, is the verb that is to be joined to  agh,  ee,  ey, &amp;c.</summary>
+        private const char VerbHasSuffixes = '*';
 
         /// <summary>Reads the word and the definition to obtain the possible words which will link to this definition</summary>
-        private IEnumerable<string> getPossibleWords()
+        private IEnumerable<string> GetPossibleWords()
         {
-           List<string> words = Regex.Split(Word, "\\s+or\\s+").Select(x => x.Trim().Trim(VERB_HAS_SUFFIXES)).ToList();
+           List<string> words = Regex.Split(Word, "\\s+or\\s+").Select(x => x.Trim().Trim(VerbHasSuffixes)).ToList();
             foreach (var w in words)
             {
                 yield return w;
@@ -289,10 +293,10 @@ namespace Cregeen
             }
             
             // Only apply suffixes to the words matked with an asterisk
-            var wordsWithSuffixChanges = Word.Contains(VERB_HAS_SUFFIXES) ? 
+            var wordsWithSuffixChanges = Word.Contains(VerbHasSuffixes) ? 
                 Regex.Split(Word, "\\s+or\\s+")
-                .Where(x => x.Contains(VERB_HAS_SUFFIXES))
-                .Select(x => x.Trim().Trim(VERB_HAS_SUFFIXES)).ToList() 
+                .Where(x => x.Contains(VerbHasSuffixes))
+                .Select(x => x.Trim().Trim(VerbHasSuffixes)).ToList() 
                 : words;
 
             // TODO: How to handle "[change -agh to -ee], or  yn."

@@ -1,4 +1,3 @@
-using System;
 using Cregeen;
 using NUnit.Framework;
 
