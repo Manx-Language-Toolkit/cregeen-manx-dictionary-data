@@ -5,6 +5,8 @@
     <RootNamespace>Cregeen_Dictionary.Test</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

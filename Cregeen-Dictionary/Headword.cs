@@ -17,7 +17,7 @@ namespace Cregeen
 
         public IEnumerable<Definition> All => Definition.AllChildren;
 
-        internal static Headword FromHtml(HtmlNode arg1, int arg2)
+        internal static Headword? FromHtml(HtmlNode arg1, int arg2)
         {
             // &nbsp; was the content, or a section heading: "A"
             if (arg1.InnerText.Length == 1 || string.IsNullOrWhiteSpace(HttpUtility.HtmlDecode(arg1.InnerText)) || arg1.GetAttributes().Any(x => x.Name == "class" && x.Value.Contains("do-not-translate")))
