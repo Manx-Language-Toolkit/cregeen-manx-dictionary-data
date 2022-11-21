@@ -21,6 +21,11 @@
     <EmbeddedResource Include="TestData\annoon.html" />
     <EmbeddedResource Include="TestData\bing.html" />
     <EmbeddedResource Include="TestData\gheul.html" />
+    <EmbeddedResource Include="TestData\hroggal.html" />
+    <None Remove="TestData\faase.html" />
+    <EmbeddedResource Include="TestData\faase.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

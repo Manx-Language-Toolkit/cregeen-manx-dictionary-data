@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -48,6 +49,7 @@ namespace Cregeen
             Extra = extra;
         }
 
+        [Pure]
         internal static Definition FromHtml(string arg1)
         {
             var split = arg1.Split(",").ToList();
@@ -119,7 +121,12 @@ namespace Cregeen
             get
             {
                 // removing "sic" can cause duplicates
-                return getPossibleWords().Select(x => x.Replace('‑', '-').Replace("’", "'").TrimAfter("[sic]", "(sic)", "[sic:", "(sic:").Trim()).Distinct();
+                return getPossibleWords()
+                    .Select(x => x.Replace('‑', '-')
+                        .Replace("’", "'")
+                        .TrimAfter("[sic]", "(sic)", "[sic:", "(sic:")
+                        .Trim())
+                    .Distinct();
             }
         }
 
@@ -264,6 +271,23 @@ namespace Cregeen
                 yield return w;
             }
 
+            // handle 'bold' words: dy <b>hroggal</b> should return "dy hroggal" and "hroggal"
+            if (Heading.Contains("<b>"))
+            {
+                // Sometimes we have <b>gheul</b>* &lt;or <b>gheuley</b>&gt;
+                // Max Indicates additions with < > so we do not include these for now.
+                var withBracesTrimmed = Utils.TrimBraces(Heading);
+                var boldHeadings = Utils.GetBoldWords(withBracesTrimmed);
+                foreach (var heading in boldHeadings)
+                {
+                    var value = HttpUtility.HtmlDecode(heading); // convert &#8209; to -
+                    if (!value.Contains('\r') && !value.Contains('\n') && !value.Contains("[") && !value.Contains("*") && !String.IsNullOrWhiteSpace(value))
+                    {
+                        yield return value;    
+                    }
+                }
+            }
+            
             // Only apply suffixes to the words matked with an asterisk
             var wordsWithSuffixChanges = Word.Contains(VERB_HAS_SUFFIXES) ? 
                 Regex.Split(Word, "\\s+or\\s+")
