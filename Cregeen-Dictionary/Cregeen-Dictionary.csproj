@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <None Update="Resources\Cregeen.aa-orderit.01052020-filtered.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
