@@ -51,4 +51,16 @@ herself. <br>
         Assert.That(headword.PossibleWords, Does.Contain("anchredjuee"));
         Assert.That(headword.EntryText, Is.EqualTo("an unbeliever"));
     }
+
+    [Test]
+    public void SEulyssee()
+    {
+        var headword = Headword.FromHtmlUnsafe(@"</i><b>s’eulyssagh</b>,<i> a. </i>how indignant or inflamed with anger,
+furious. E<br>
+<b>s’eulyssee</b>,<i> a. id.,</i> [<i>comp.</i> and <i>sup.</i>,]<i> </i>58. E</p>");
+        Assert.That(headword.Definition.Word, Is.EqualTo("s’eulyssagh"));
+
+        var sEulyssee = headword.All.Skip(1).First();
+        Assert.That(sEulyssee.EntryText, Is.EqualTo("how indignant or inflamed with anger, furious."));
+    }
 }
