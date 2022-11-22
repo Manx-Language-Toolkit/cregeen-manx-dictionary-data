@@ -148,6 +148,15 @@ nyn maccagh, s. your, &c. halt, &c. person. B
         Assert.That(thannys.Word, Is.Not.EqualTo("thannys")); // sub-word
         Assert.That(thannys.EntryText, Is.EqualTo("thin, rarify"));
     }
+
+    [Test]
+    public void Aaitn()
+    {
+        var html = GetTestData("aaitn-snippet");
+        var aaitn = Headword.FromHtmlUnsafe(html).Definition;
+        Assert.That(aaitn.Word, Is.EqualTo("aaitn"));
+        Assert.That(aaitn.EntryText, Is.EqualTo("gorse, cover with whins"));
+    }
     
     private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
 }
