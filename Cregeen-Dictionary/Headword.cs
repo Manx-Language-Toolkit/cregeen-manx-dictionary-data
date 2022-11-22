@@ -85,7 +85,7 @@ internal class Headword
             if (!SkippableEntryText.Contains(definition.EntryText.Trim()))
             {
                 Console.WriteLine("warn: unexpected entry text:" + definition.Word + ":" + definition.EntryText);
-                definition.EntryTextOverride = definition.EntryText + Environment.NewLine + definitions[i - 1].EntryText;
+                definition.EntryTextOverride = definition.EntryText + "; " + definitions[i - 1].EntryText;
             }
             else
             {

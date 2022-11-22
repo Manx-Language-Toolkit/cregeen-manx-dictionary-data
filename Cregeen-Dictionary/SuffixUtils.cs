@@ -24,5 +24,8 @@ public static class SuffixUtils
         "‑ys. 88",
         " 89",
         " 85",
+        " em.",
+        " id.",
+        "‑syn",
     };
 }
