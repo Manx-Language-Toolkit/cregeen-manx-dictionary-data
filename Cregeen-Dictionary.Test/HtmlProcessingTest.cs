@@ -1,3 +1,4 @@
+using System.Linq;
 using Cregeen;
 using NUnit.Framework;
 
@@ -20,5 +21,24 @@ public class HtmlProcessingTest
         Assert.That(ennym.Word, Is.EqualTo("ennym"));
         Assert.That(ennym.Extra, Is.EqualTo("<i> s. m.</i> name, epithet, appellation;<i> pl. </i>see <i>enmyn."));
         Assert.That(ennym.EntryText, Is.EqualTo("name, epithet, appellation; pl. see enmyn."));
+    }
+
+    [Test]
+    public void Lioroo()
+    {
+        var headword = Headword.FromHtmlUnsafe(@"
+</i><b><u>lio</u>ree<span style='color:red'>-</span>hene</b>, <i>p.&nbsp;p. </i>by
+herself. <br>
+<b>lioroo</b>, <i>p.&nbsp;p. </i>by them; <b>&#8209;syn</b>,<i> id. em.");
+
+
+        Assert.That(headword.Definition.EntryText, Is.EqualTo("by herself."));
+        
+        var lioroo = headword.All.Skip(1).Single();
+        Assert.That(lioroo.Word, Is.EqualTo("lioroo"));
+        Assert.That(lioroo.PossibleWords, Does.Contain("lioroosyn"));
+        Assert.That(lioroo.Abbreviations, Does.Contain(Abbreviation.Emphatically));
+        Assert.That(lioroo.Abbreviations, Does.Contain(Abbreviation.TheSameAsAbove));
+        Assert.That(lioroo.EntryText, Is.EqualTo("by them; by herself."));
     }
 }
