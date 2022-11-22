@@ -15,7 +15,7 @@ public static class Abbreviations
         ["adv. p."] = AdverbAndPronoun,
         ["adv."] = Abbreviation.Adverb,
         ["comp."] = ComparativeDegree,
-        ["comj."] = Abbreviation.Conjunction,
+        ["conj."] = Abbreviation.Conjunction,
         ["c. p."] = ConjunctionAndPronoun,
         ["dim."] = Diminutive,
         ["em."] = Emphatically,
