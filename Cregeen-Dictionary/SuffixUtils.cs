@@ -21,6 +21,7 @@ public static class SuffixUtils
         "‑ym, 86", 
         "‑yms, 87", 
         "‑ys, 88",
-        " 89"
+        " 89",
+        " 85",
     };
 }
