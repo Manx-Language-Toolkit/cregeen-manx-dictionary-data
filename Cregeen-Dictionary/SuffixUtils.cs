@@ -27,5 +27,9 @@ public static class SuffixUtils
         " em.",
         " id.",
         "‑syn",
+        "‑in",
+        "‑ish",
+        "‑yn",
+        " id. em" // bailleuish
     };
 }
