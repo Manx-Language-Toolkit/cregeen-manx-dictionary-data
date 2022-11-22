@@ -30,6 +30,7 @@ public static class SuffixUtils
         "‑in",
         "‑ish",
         "‑yn",
-        " id. em" // bailleuish
+        " id. em", // bailleuish
+        " pl. 71 [change ‑agh to ‑ee]."
     };
 }

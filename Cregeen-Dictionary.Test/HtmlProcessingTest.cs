@@ -41,4 +41,14 @@ herself. <br>
         Assert.That(lioroo.Abbreviations, Does.Contain(Abbreviation.TheSameAsAbove));
         Assert.That(lioroo.EntryText, Is.EqualTo("by them; by herself."));
     }
+
+    [Test]
+    public void Anchredjuee()
+    {
+        // ReSharper disable line StringLiteralTypo
+        var headword = Headword.FromHtmlUnsafe("<b>an<u>chred</u>juagh</b>,<i> s. m.</i> an unbeliever; <i>pl. </i>71 [change &#8209;<b>agh</b> to &#8209;<b>ee</b>].<i> <br>").Definition;
+        Assert.That(headword.Word, Is.EqualTo("anchredjuagh"));
+        Assert.That(headword.PossibleWords, Does.Contain("anchredjuee"));
+        Assert.That(headword.EntryText, Is.EqualTo("an unbeliever"));
+    }
 }
