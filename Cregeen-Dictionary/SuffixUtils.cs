@@ -13,6 +13,7 @@ public static class SuffixUtils
         "‑ail, 78",
         "‑al, 79",
         "‑ee, 80", 
+        "‑ee 80",
         "‑eil, 81",
         "‑ey, 82",
         "‑in, 83", 
