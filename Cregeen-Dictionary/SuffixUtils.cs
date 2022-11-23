@@ -50,6 +50,7 @@ public static class SuffixUtils
         "‑it",
         "‑ish",
         "-ins",
+        "‑ins",
         "‑yn",
         "‑ys",
         "‑ys.",
