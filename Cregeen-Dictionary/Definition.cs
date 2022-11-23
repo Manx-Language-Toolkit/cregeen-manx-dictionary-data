@@ -234,6 +234,15 @@ public class Definition
                 ",",
                 "85. ",
                 "61. ",
+                "5.",
+                "6.",
+                "7 ",
+                "[158]. ",
+                "144. ",
+                "42. ",
+                "128, ",
+                "4. ",
+                "6. ",
             })
             .OrderByDescending(x => x.Length).ToList();
         while (prefixes.Any(x => ret.StartsWith(x)))
@@ -358,7 +367,11 @@ public class Definition
                 .Replace("[yn]", "yn")
                 .Replace("[e]", "e")
                 .Replace("[80]", "80")
+                .Replace("[ḏ]. ", "ḏ. ")
+                .Replace("[s].", "s.")
+                .Replace("[f.]", "f.")
                 .Replace("[ad]", "ad")
+                .Replace("[a].", "a.")
                 .Replace("[m]", "m") // chaboon
                 .Replace("[or s'tiark]", "or s'tiark")
                 .Replace("[or cruinnaght]", "or cruinnaght")
