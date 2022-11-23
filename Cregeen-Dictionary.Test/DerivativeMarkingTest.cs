@@ -23,5 +23,12 @@ public class DerivativeMarkingTest
             Assert.That(marking, Is.Null);
             Assert.That(remaining, Is.EqualTo("her skill, &c. "));
         }
+
+        {
+            string untrimmedInput = " v. taught, did teach, learned or did learn, did gain, or impart knowledge. Y. ";
+            var (marking, remaining) = DerivativeMarking.ParseDerivativeMarking(untrimmedInput);
+            Assert.That(marking?.Marking, Is.EqualTo("Y"));
+            Assert.That(remaining, Is.EqualTo("v. taught, did teach, learned or did learn, did gain, or impart knowledge."));
+        }
     }
 }

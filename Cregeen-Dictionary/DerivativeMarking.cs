@@ -18,8 +18,8 @@ public class DerivativeMarking
     [Pure]
     public static (DerivativeMarking?, string) ParseDerivativeMarking(string param)
     {
-        var input = param.Trim();
-        var detectedEnding = ValidEndings.SingleOrDefault(ending => input.EndsWith(" " + ending));
+        var input = param.Trim().TrimEnd('.');
+        var detectedEnding = ValidEndings.SingleOrDefault(ending => input.EndsWith(" " + ending) || input.EndsWith(" " + ending + "."));
         if (detectedEnding == null)
         {
             return (null, param);
