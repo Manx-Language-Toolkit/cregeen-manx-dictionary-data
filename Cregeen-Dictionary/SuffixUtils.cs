@@ -32,7 +32,9 @@ public static class SuffixUtils
         "‑yn",
         " 58",
         "[comp. and sup.,]",
+        " comp. and sup.",
         " [F]",
+        " W.",
         " id. em", // bailleuish
         " pl. 71 [change ‑agh to ‑ee].",
         " pl. 67 [change ‑ey to ‑aghyn]",
