@@ -5,6 +5,7 @@ using NUnit.Framework;
 namespace Cregeen_Dictionary.Test;
 
 // TODO: cha greck DerivativeMarking is incorrect
+// TODO: dynsee DerivativeMarking is incorrect
 public class HtmlProcessingTest
 {
     [Test]
@@ -73,5 +74,18 @@ furious. E<br>
 -<b>ins</b>; &#8209;<b>ym</b>; &#8209;<b>yms</b>, <a href=""#R94"">94</a>. W.<br>").Definition;
         
         Assert.That(headword.EntryText, Is.EqualTo("did sew, sewed"));
+    }
+    
+    
+    
+    [Test]
+    public void Dynsee()
+    {
+        var dynsee =
+            Headword.FromHtmlUnsafe(@"<b>dynsee</b>, <i>v. </i>taught, did teach, learned or did learn, did gain, or
+impart knowledge. Y. <br>").Definition;
+        
+        Assert.That(dynsee.DerivedFromLetter?.Marking, Is.EqualTo("Y"));
+        Assert.That(dynsee.EntryText, Is.EqualTo("taught, did teach, learned or did learn, did gain, or impart knowledge."));
     }
 }
