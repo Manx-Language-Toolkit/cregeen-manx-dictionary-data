@@ -63,4 +63,14 @@ furious. E<br>
         var sEulyssee = headword.All.Skip(1).First();
         Assert.That(sEulyssee.EntryText, Is.EqualTo("how indignant or inflamed with anger, furious."));
     }
+
+    [Test]
+    public void Dwhaayl()
+    {
+        var headword =
+            Headword.FromHtmlUnsafe(@"<b>dwhaayl</b>, <i>v.</i> did sew, sewed; &#8209;<b>agh</b>; &#8209;<b>in</b>;
+-<b>ins</b>; &#8209;<b>ym</b>; &#8209;<b>yms</b>, <a href=""#R94"">94</a>. W.<br>").Definition;
+        
+        Assert.That(headword.EntryText, Is.EqualTo("did sew, sewed"));
+    }
 }
