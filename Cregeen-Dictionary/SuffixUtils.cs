@@ -30,6 +30,7 @@ public static class SuffixUtils
         " id.",
         "‑syn",
         "‑in",
+        "‑it",
         "‑ish",
         "-ins",
         "‑yn",
