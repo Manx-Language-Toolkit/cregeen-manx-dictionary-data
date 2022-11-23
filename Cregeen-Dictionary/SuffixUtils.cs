@@ -38,6 +38,7 @@ public static class SuffixUtils
         "[comp. and sup.,]",
         " comp. and sup.",
         " [F]",
+        " C",
         " W.",
         " id. em", // bailleuish
         " pl. 71 [change ‑agh to ‑ee].",
