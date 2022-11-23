@@ -32,6 +32,7 @@ public static class SuffixUtils
         " 85",
         " em.",
         " id.",
+        "‑s",
         "‑syn",
         "‑al",
         "‑in",
