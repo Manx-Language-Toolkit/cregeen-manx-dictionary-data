@@ -357,6 +357,7 @@ public class Definition
                 .Replace("[lesh]", "lesh")
                 .Replace("[yn]", "yn")
                 .Replace("[e]", "e")
+                .Replace("[80]", "80")
                 .Replace("[ad]", "ad")
                 .Replace("[m]", "m") // chaboon
                 .Replace("[or s'tiark]", "or s'tiark")
