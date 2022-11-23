@@ -17,6 +17,7 @@ public static class SuffixUtils
         "‑eil, 81",
         "‑aghey, 82", 
         "‑ey, 82",
+        "‑yn, 83",
         "‑in, 83", 
         "‑ins, 84", 
         "‑it, 85",
