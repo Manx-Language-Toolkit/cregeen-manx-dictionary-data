@@ -351,6 +351,7 @@ public class Definition
                 .Replace("[cha]", "cha")
                 .Replace("[er]", "er")
                 .Replace("[ny]", "ny")
+                .Replace("[dv]", "dv") // a[dv]. 
                 .Replace("[da]", "da")
                 .Replace("[lesh]", "lesh")
                 .Replace("[yn]", "yn")
