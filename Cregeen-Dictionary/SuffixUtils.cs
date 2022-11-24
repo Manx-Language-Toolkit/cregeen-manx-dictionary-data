@@ -17,6 +17,7 @@ public static class SuffixUtils
         "‑al, 79.",
         "‑ee, 80", 
         "‑ee 80",
+        " ‑e, 80",
         " ‑ee, 80:",
         "‑eil, 81",
         "‑aghey, 82", 
@@ -36,12 +37,14 @@ public static class SuffixUtils
         "‑in, 88",
         "‑ys. 88",
         "‑ys, 94",
+        "‑ys; 94.",
         "‑yms, 94",
         "‑yms, 94.",
         "‑ym, 94.",
         " 89",
         " 85",
         " em.",
+        "[94].",
         " id.",
         "‑agh.",
         " v.",
@@ -101,6 +104,7 @@ public static class SuffixUtils
         " pl. 71 [change ‑agh to ‑ee]", // TODO: confirm
         " pl. 71 [change ‑iagh to ‑ee]", // TODO: confirm
         " pl. 72 [change ‑agh or ‑aght to ‑eeyn].", // TODO: confirm
+        " [pl. 71: change ‑agh to ‑ee].", // TODO: confirm
         " pl. 71.", // TODO: check
         " pl. 67.", // TODO: check
         " pl. 76.", // TODO: check
