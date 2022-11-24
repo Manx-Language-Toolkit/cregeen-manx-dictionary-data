@@ -107,5 +107,7 @@ public static class SuffixUtils
         " pl. 68.", // TODO: confirm
         " 58",
         "58.",
+        "58,",
+        "58;",
     };
 }
