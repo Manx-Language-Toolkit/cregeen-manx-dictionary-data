@@ -207,7 +207,12 @@ public class Definition
             {
                 ";",
                 ",",
-            }).ToList();
+            }).OrderByDescending(x => x.Length).ToList();
+
+        if (suffixes.Any(x => ret == x.Trim()))
+        {
+            return "";
+        }
         
         // trim a full stop, only if we have a match as well
         if (suffixes.Any(x => ret.EndsWith(x + ".")))
@@ -233,16 +238,20 @@ public class Definition
                 "8.",
                 ",",
                 "85. ",
+                "85, ",
                 "61. ",
                 "5.",
                 "6.",
                 "7 ",
+                "93. ",
                 "[158]. ",
                 "144. ",
                 "42. ",
                 "128, ",
                 "4. ",
                 "̱̱d. ", // This refers to note 7, the pronunciation of d. D is not an abbreviation itself.
+                "47 [ji‑] ", // refers to note 47: pronunciation-based
+                "47 [ji‑]. ",
                 "6. ",
             })
             .OrderByDescending(x => x.Length).ToList();
@@ -372,6 +381,7 @@ public class Definition
                 .Replace("[f.]", "f.")
                 .Replace("[ad]", "ad")
                 .Replace("[a].", "a.")
+                .Replace("[comp. and sup.,]", "comp. and sup.,")
                 .Replace("[m]", "m") // chaboon
                 .Replace("[or s'tiark]", "or s'tiark")
                 .Replace("[or cruinnaght]", "or cruinnaght")
