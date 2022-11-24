@@ -158,5 +158,16 @@ nyn maccagh, s. your, &c. halt, &c. person. B
         Assert.That(aaitn.EntryText, Is.EqualTo("gorse, cover with whins"));
     }
     
+    
+    [Test]
+    public void Dobberan()
+    {
+        // we had an issue with a bad replacement
+        var html = GetTestData("dobberan");
+        var dobberan = Headword.FromHtmlUnsafe(html).Definition;
+        Assert.That(dobberan.Word, Is.EqualTo("dobberan"));
+        Assert.That(dobberan.EntryText, Does.Not.StartWith("d"));
+    }
+    
     private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
 }

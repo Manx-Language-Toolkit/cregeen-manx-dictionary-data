@@ -30,8 +30,8 @@
     <EmbeddedResource Include="TestData\da.html" />
     <EmbeddedResource Include="TestData\soyl.html" />
     <EmbeddedResource Include="TestData\thannys-snippet.html" />
-    <None Remove="TestData\aaitn-snippet.html" />
     <EmbeddedResource Include="TestData\aaitn-snippet.html" />
+    <EmbeddedResource Include="TestData\dobberan.html" />
   </ItemGroup>
 
   <ItemGroup>
