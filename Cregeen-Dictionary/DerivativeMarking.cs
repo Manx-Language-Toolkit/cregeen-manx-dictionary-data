@@ -19,15 +19,18 @@ public class DerivativeMarking
     public static (DerivativeMarking?, string) ParseDerivativeMarking(string param)
     {
         var input = param.Trim().TrimEnd('.');
-        var detectedEnding = ValidEndings.SingleOrDefault(ending => input.EndsWith(" " + ending) || input.EndsWith(" " + ending + "."));
+
+        var allEndings = ValidEndings.SelectMany(x => new[] { x, $"[{x}]" });
+        var detectedEnding = allEndings.SingleOrDefault(ending => input.EndsWith(" " + ending) || input.EndsWith(" " + ending + "."));
         if (detectedEnding == null)
         {
             return (null, param);
         }
 
-        var marking = new DerivativeMarking { Marking = detectedEnding };
+        var marking = new DerivativeMarking { Marking = detectedEnding.Trim('[', ']') };
+        
 
-        return (marking, input[..(input.Length - marking.Marking.Length - " ".Length)]);
+        return (marking, input[..(input.Length - detectedEnding.Length - " ".Length)]);
     }
 
     private static readonly string[] ValidEndings = {
