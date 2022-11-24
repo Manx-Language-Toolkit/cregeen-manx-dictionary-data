@@ -242,6 +242,7 @@ public class Definition
                 "42. ",
                 "128, ",
                 "4. ",
+                "̱̱d. ", // This refers to note 7, the pronunciation of d. D is not an abbreviation itself.
                 "6. ",
             })
             .OrderByDescending(x => x.Length).ToList();
@@ -367,7 +368,6 @@ public class Definition
                 .Replace("[yn]", "yn")
                 .Replace("[e]", "e")
                 .Replace("[80]", "80")
-                .Replace("[ḏ]. ", "ḏ. ")
                 .Replace("[s].", "s.")
                 .Replace("[f.]", "f.")
                 .Replace("[ad]", "ad")
