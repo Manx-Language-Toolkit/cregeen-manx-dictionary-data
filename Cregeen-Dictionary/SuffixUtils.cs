@@ -11,13 +11,16 @@ public static class SuffixUtils
     {
         " ‑agh,77",
         "‑agh, 77", 
+        "‑agh 77", 
         "‑ail, 78",
         "‑al, 79",
         "‑ee, 80", 
         "‑ee 80",
+        " ‑ee, 80:",
         "‑eil, 81",
         "‑aghey, 82", 
         "‑ey, 82",
+        " ‑y, 82",
         "‑yn, 83",
         "‑in, 83", 
         "‑ins, 84", 
@@ -28,6 +31,7 @@ public static class SuffixUtils
         "‑yms. 87",
         "‑yms, 87", 
         "‑ys, 88",
+        "‑ys, 88..",
         "‑in, 88",
         "‑ys. 88",
         "‑ys, 94",
@@ -47,6 +51,7 @@ public static class SuffixUtils
         "‑‑agh",
         "‑agh",
         "‑ey",
+        "‑ee",
         "‑it",
         "‑ish",
         "-ins",
@@ -57,7 +62,6 @@ public static class SuffixUtils
         "‑ym",
         "‑yms",
         "‑aghey",
-        " 58",
         " 87",
         "[comp. and sup.,]",
         " comp. and sup.",
@@ -69,24 +73,37 @@ public static class SuffixUtils
         " D",
         " E",
         " F",
+        " G",
         " J",
         " I",
         " M",
         " [M]",
+        " Q",
+        " R",
+        " S",
+        " T",
+        " 86", // implies a bad suffix
         "77; &c.",
         "‑ym, &c",
         "G .", // see if this needs fixing
         " see 62.",
+        " 161.",
         " W.",
         " id. em", // bailleuish
         " pl. 71 [change ‑agh to ‑ee]",
         " pl. 72 [change ‑agh to ‑eeyn]",
         " pl. 67 [change ‑ey to ‑aghyn]",
+        " pl. 68 [change ‑ey to ‑eeyn].", // TODO: confirm
         " pl. 69 [change ‑ey to ‑yn]", // TODO: confirm
+        " pl. 69 [change ‑e to ‑yn].", // TODO: confirm
         " pl. 71 [change ‑agh to ‑ee]", // TODO: confirm
         " pl. 71 [change ‑iagh to ‑ee]", // TODO: confirm
+        " pl. 72 [change ‑agh or ‑aght to ‑eeyn].", // TODO: confirm
         " pl. 71.", // TODO: check
         " pl. 67.", // TODO: check
         " pl. 76.", // TODO: check
+        " pl. 68.", // TODO: confirm
+        " 58",
+        "58.",
     };
 }
