@@ -100,6 +100,6 @@ impart knowledge. Y. <br>").Definition;
         
         Assert.That(hw.Definition.EntryText, Is.EqualTo("how full of net work."));
         Assert.That(hw.All.Count(), Is.EqualTo(2));
-        Assume.That(hw.All.Skip(1).Single().EntryText, Is.EqualTo("how full of net work."));
+        Assert.That(hw.All.Skip(1).Single().EntryText, Is.EqualTo("how full of net work."));
     }
 }
