@@ -7,6 +7,7 @@ namespace Cregeen_Dictionary.Test;
 // TODO: cha greck DerivativeMarking is incorrect
 // TODO: dynsee DerivativeMarking is incorrect
 // TODO: geinnagh - check suffix
+// TODO: n'eeastaghey
 public class HtmlProcessingTest
 {
     [Test]
@@ -88,5 +89,17 @@ impart knowledge. Y. <br>").Definition;
         
         Assert.That(dynsee.DerivedFromLetter?.Marking, Is.EqualTo("Y"));
         Assert.That(dynsee.EntryText, Is.EqualTo("taught, did teach, learned or did learn, did gain, or impart knowledge."));
+    }
+
+    [Test]
+    public void SJeebinagh()
+    {
+        var hw = Headword.FromHtmlUnsafe(@"<b>s’jeebinagh</b>,<i> a. </i>how full of net work. J<br>
+<b>s’jeebinee</b>,<i> a. id.</i>, [<i>comp.</i> and <i>sup.</i>,] 58, J<i><br>");
+        
+        
+        Assert.That(hw.Definition.EntryText, Is.EqualTo("how full of net work."));
+        Assert.That(hw.All.Count(), Is.EqualTo(2));
+        Assume.That(hw.All.Skip(1).Single().EntryText, Is.EqualTo("how full of net work."));
     }
 }
