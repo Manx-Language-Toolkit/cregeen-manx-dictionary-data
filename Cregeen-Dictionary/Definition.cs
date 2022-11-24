@@ -227,7 +227,7 @@ public class Definition
     private static string StripPrefixes(string ret)
     {
         // strip prefixed abbreviations (and anything before them)
-        var prefixes = PrefixToAbbreviation.Keys
+        var prefixes = PrefixToAbbreviation.Keys.OrderByDescending(x => x.Length)
             .Concat(new[]
             {
                 "8.",

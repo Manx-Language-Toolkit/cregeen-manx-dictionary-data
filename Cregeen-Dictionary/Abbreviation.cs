@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using static Cregeen.Abbreviation;
 using static Cregeen.AbbreviationExtensions.Gender;
 using static Cregeen.AbbreviationExtensions.PartOfSpeech;
@@ -50,7 +51,7 @@ public static class Abbreviations
     public static List<Abbreviation> ParseAbbreviations(string toParse)
     {
         var ret = new List<Abbreviation>();
-        foreach (var (k, v) in PrefixToAbbreviation)
+        foreach (var (k, v) in PrefixToAbbreviation.OrderByDescending(x => x.Key.Length))
         {
             if (toParse.Contains($" {k}") || toParse.StartsWith(k) || toParse.Contains($">{k}"))
             {
