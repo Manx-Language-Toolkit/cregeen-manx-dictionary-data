@@ -55,8 +55,12 @@ public class Definition
         var potentialEntry = DecodeString(Extra);
         var (derivativeMarking, entry2) = DerivativeMarking.ParseDerivativeMarking(potentialEntry);
         DerivedFromLetter = derivativeMarking;
-        Entry = entry2;
+        var (proverb, entry3) = ProverbData.PraseProverb(entry2);
+        Proverb = proverb;
+        Entry = entry3;
     }
+
+    public ProverbData? Proverb { get; set; }
 
     /// <summary>Defines the letter this derivative/aspiration should be listed under</summary>
     public DerivativeMarking? DerivedFromLetter { get;  }
