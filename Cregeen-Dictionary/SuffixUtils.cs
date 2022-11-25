@@ -87,6 +87,8 @@ public static class SuffixUtils
         " R",
         " S",
         " T",
+        " V",
+        " W",
         " 86", // implies a bad suffix
         "77; &c.",
         "‑ym, &c",
