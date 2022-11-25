@@ -62,6 +62,7 @@ static class Program
         var allWordDefinitions = headwords.SelectMany(x => x.All);
 
         // TODO: How do we handle ennym + enn*-ym
+        // TODO: Proverbs are not handled correctly sometimes: Prov. is also a bible verse
             
         HashSet<string> ok = new HashSet<string>()
         {
@@ -286,6 +287,7 @@ public class OutDef
     public List<string> Gender { get; set; }
     
     public string Definition { get; set; }
+    public string? Proverb { get; set; }
     public OutDef[] Children { get; set; }
 
     internal static OutDef FromDef(Headword def)
@@ -301,6 +303,7 @@ public class OutDef
             PartsOfSpeech = def.Abbreviations.SelectMany(x => x.GetPartsOfSpeech()).ToHashSet().Select(x => x.ToString()).ToList(),
             Gender = def.Abbreviations.SelectMany(x => x.GetGender()).ToHashSet().Select(gender => gender == AbbreviationExtensions.Gender.Feminine ? "f" : "m").ToList(),
             Definition = def.EntryText,
+            Proverb = def.Proverb?.Proverb,
             EntryHtml = FixUnclosedTags(def.Extra),
             HeadingHtml = FixUnclosedTags(def.Heading),
             Children = def.Children.Select(FromDef).ToArray()
