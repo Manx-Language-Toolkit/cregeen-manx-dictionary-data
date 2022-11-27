@@ -250,9 +250,11 @@ public class Definition
                 "93. ",
                 "89. ",
                 "[158]. ",
+                "158. ",
                 "144. ",
                 "42. ",
                 "128, ",
+                "161. ",
                 "4. ",
                 "̱̱d. ", // This refers to note 7, the pronunciation of d. D is not an abbreviation itself.
                 "47 [ji‑] ", // refers to note 47: pronunciation-based
@@ -383,7 +385,13 @@ public class Definition
                 .Replace("[e]", "e")
                 .Replace("[80]", "80")
                 .Replace("[s].", "s.")
+                .Replace("[s. pl.].", "s. pl.")
                 .Replace("[f.]", "f.")
+                .Replace("[pro.]", "pro.")
+                .Replace("[v.]", "v.")
+                .Replace("[v]", "v")
+                .Replace("[a.]", "a.")
+                .Replace("[a. d.] ", "a. d.")
                 .Replace("[ad]", "ad")
                 .Replace("[a].", "a.")
                 .Replace("[comp. and sup.,]", "comp. and sup.,")

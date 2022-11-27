@@ -6,6 +6,7 @@ using static Cregeen_Dictionary.Test.TestUtil.ResourceFetcher;
 namespace Cregeen_Dictionary.Test;
 
 // TODO: kesh
+// TODO: bleanyn
 [TestFixture]
 public class EndToEndTest
 {
@@ -168,6 +169,17 @@ nyn maccagh, s. your, &c. halt, &c. person. B
         var dobberan = Headword.FromHtmlUnsafe(html).Definition;
         Assert.That(dobberan.Word, Is.EqualTo("dobberan"));
         Assert.That(dobberan.EntryText, Does.Not.StartWith("d"));
+    }
+    
+    [Test]
+    public void Preach()
+    {
+        // we had an issue with a bad replacement
+        var html = GetTestData("preach");
+        var hw = Headword.FromHtmlUnsafe(html);
+
+        var next = hw.All.Skip(1).First();
+        Assert.That(next.EntryText, Is.EqualTo("not preach"));
     }
     
     private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
