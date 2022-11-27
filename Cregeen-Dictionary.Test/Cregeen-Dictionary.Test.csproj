@@ -33,6 +33,8 @@
     <EmbeddedResource Include="TestData\aaitn-snippet.html" />
     <EmbeddedResource Include="TestData\dobberan.html" />
     <EmbeddedResource Include="TestData\preach.html" />
+    <None Remove="TestData\aspickys.html" />
+    <EmbeddedResource Include="TestData\aspickys.html" />
   </ItemGroup>
 
   <ItemGroup>

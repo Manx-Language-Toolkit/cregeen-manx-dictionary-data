@@ -55,10 +55,14 @@ public class Definition
         var potentialEntry = DecodeString(Extra);
         var (derivativeMarking, entry2) = DerivativeMarking.ParseDerivativeMarking(potentialEntry);
         DerivedFromLetter = derivativeMarking;
-        var (proverb, entry3) = ProverbData.PraseProverb(entry2);
+        var (example, entry3) = BibleData.PraseBibleBook(entry2);
+        var (proverb, entry4) = ProverbData.PraseProverb(entry3);
+        BibleExample = example;
         Proverb = proverb;
-        Entry = entry3;
+        Entry = entry4;
     }
+
+    public BibleData? BibleExample { get; set; }
 
     public ProverbData? Proverb { get; set; }
 

@@ -182,5 +182,21 @@ nyn maccagh, s. your, &c. halt, &c. person. B
         Assert.That(next.EntryText, Is.EqualTo("not preach"));
     }
     
+    [Test]
+    public void Aspickys()
+    {
+        // we had an issue with a bad replacement
+        var html = GetTestData("aspickys");
+        var hw = Headword.FromHtmlUnsafe(html);
+
+        var next = hw.All.Skip(1).First();
+        Assert.That(next.EntryText, Is.EqualTo("belonging to a bishop; episcopal."));
+        
+        // ensure "Acts" is handled elsewhere
+        var aspickys = hw.All.ToList()[3];
+        Assert.That(aspickys.Entry, Does.Not.Contain("Acts,"));
+        Assert.That(aspickys.EntryText, Is.EqualTo("bishoprick"));
+    }
+    
     private static Definition GetDefinition(Headword word, int k) => word.Definition.Children.Skip(k).First();
 }
