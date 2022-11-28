@@ -395,6 +395,8 @@ public class Definition
                 .Replace("[v.]", "v.")
                 .Replace("[v]", "v")
                 .Replace("[a.]", "a.")
+                .Replace("[i]", "i")
+                .Replace("[i.]", "i.")
                 .Replace("[a. d.] ", "a. d.")
                 .Replace("[ad]", "ad")
                 .Replace("[a].", "a.")
